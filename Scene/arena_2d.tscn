@@ -1,0 +1,84 @@
+[gd_scene format=3 uid="uid://4y65ctapxa7c"]
+
+[ext_resource type="Texture2D" uid="uid://ce6o71538cywk" path="res://cube32.png" id="1_yh2c8"]
+
+[node name="Arena2D" type="Node2D" unique_id=1399404612]
+
+[node name="BG" type="ColorRect" parent="." unique_id=2118744463]
+offset_right = 800.0
+offset_bottom = 400.0
+color = Color(0.65882355, 0.9019608, 0.11372549, 1)
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1840305265]
+anchor_mode = 0
+
+[node name="PlaceHolderObject" type="Sprite2D" parent="." unique_id=2059287564]
+modulate = Color(1, 0, 0, 1)
+position = Vector2(400, 200)
+scale = Vector2(4, 4)
+texture = ExtResource("1_yh2c8")
+
+[node name="Duck2D" type="Sprite2D" parent="." unique_id=1576329683]
+position = Vector2(191, 177)
+texture = ExtResource("1_yh2c8")
+
+[node name="ColorRect" type="ColorRect" parent="Duck2D" unique_id=679138927]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -48.0
+offset_top = -16.0
+grow_horizontal = 2
+grow_vertical = 0
+color = Color(0.3529412, 0.41960785, 0.078431375, 0.5882353)
+
+[node name="Duck2D2" type="Sprite2D" parent="." unique_id=1568990993]
+position = Vector2(203, 274)
+texture = ExtResource("1_yh2c8")
+
+[node name="ColorRect" type="ColorRect" parent="Duck2D2" unique_id=1770196659]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -48.0
+offset_top = -16.0
+grow_horizontal = 2
+grow_vertical = 0
+color = Color(0.3529412, 0.41960785, 0.078431375, 0.5882353)
+
+[node name="Duck2D3" type="Sprite2D" parent="." unique_id=1965870591]
+position = Vector2(266, 322)
+texture = ExtResource("1_yh2c8")
+
+[node name="ColorRect" type="ColorRect" parent="Duck2D3" unique_id=1635235917]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -48.0
+offset_top = -16.0
+grow_horizontal = 2
+grow_vertical = 0
+color = Color(0.3529412, 0.41960785, 0.078431375, 0.5882353)
+
+[node name="Duck2D4" type="Sprite2D" parent="." unique_id=352887246]
+position = Vector2(577, 171)
+texture = ExtResource("1_yh2c8")
+
+[node name="ColorRect" type="ColorRect" parent="Duck2D4" unique_id=1948379875]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -29.0
+offset_top = -16.0
+offset_right = 19.0
+grow_horizontal = 2
+grow_vertical = 0
+color = Color(0.3529412, 0.41960785, 0.078431375, 0.5882353)
