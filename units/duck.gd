@@ -4,11 +4,13 @@ extends CharacterBody2D
 @export var selected_color: Color=Color(1.0,0.85,0.0,1.0) #yellow tint
 @export var normal_color: Color= Color(1.0, 1.0,  1.0, 1.0)  #white
 
-var _selected: bool =false
-
 #node refs
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var nav_agent: NavigationAgent2D =$NavAgent
+
+var _selected: bool =false
+var _has_target: bool =false #only move when a target was actually set
+var _target_pos:Vector2 = Vector2.ZERO #fallback for navmesh isn't baked
 
 func _ready() -> void:
 	nav_agent.path_desired_distance   = 4.0   # snap to each waypoint this close
@@ -25,30 +27,43 @@ func _input(event: InputEvent) -> void:
 			and event.pressed):
 		return
 		
-		var click_world:= get_global_mouse_position()
+	var click_world:= get_global_mouse_position()
 		
-		#player click this duck?
-		if _is_click_on_self(click_world):
-			_set_selected(true)
-			get_viewport().set_input_as_handled()
-			return
+	#player click this duck?
+	if _is_click_on_self(click_world):
+		_set_selected(true)
+		get_viewport().set_input_as_handled()
+		return
 		
-		#click as move 
-		if _selected:
-			_move_to(click_world)
-			_set_selected(false)
-			get_viewport().set_input_as_handled()
+	#click as move 
+	if _selected:
+		_move_to(click_world)
+		_set_selected(false)
+		get_viewport().set_input_as_handled()
 
 #physics process
 func _physics_process(delta: float) -> void:
-	if nav_agent.is_navigation_finished():
-		velocity =Vector2.ZERO
+	if not _has_target:
 		return
 	
-	var next: Vector2 = nav_agent.get_next_path_position()
-	var dir: Vector2 = (next- global_position).normalized()
-	velocity = dir * move_speed
-	move_and_slide()
+	#navPath
+	if not nav_agent.is_navigation_finished():
+		var next: Vector2 = nav_agent.get_next_path_position()
+		# FIX: if next == our position the navmesh gave nothing useful; fall back
+		if next.distance_to(global_position) > 1.0:
+			velocity = (next - global_position).normalized() * move_speed
+			move_and_slide()
+			return
+	
+	# --- Fallback: direct straight-line movement (no baked navmesh needed) ---
+	var diff: Vector2 =_target_pos -global_position
+	if diff.length() >8.0:
+		velocity =diff.normalized()*move_speed
+		move_and_slide()
+	else:
+		global_position =_target_pos
+		velocity =Vector2.ZERO
+		_has_target = false # arrived — stop moving
 
 #helpers
 func _is_click_on_self(world_pos:Vector2) -> bool:
@@ -60,9 +75,11 @@ func _is_click_on_self(world_pos:Vector2) -> bool:
 func _set_selected(value:bool)->void:
 	_selected=value
 	if sprite:
-		sprite.modulate=selected_color if selected_color else normal_color
+		sprite.modulate = selected_color if _selected else normal_color
 
 func _move_to(pos:Vector2)->void:
+	_target_pos =pos
+	_has_target =true
 	nav_agent.target_position =pos
 
 #public API

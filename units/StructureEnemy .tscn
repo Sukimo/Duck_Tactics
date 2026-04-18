@@ -8,6 +8,7 @@ size = Vector2(128, 128)
 
 [node name="StaticBody2D" type="StaticBody2D" unique_id=1750735628]
 script = ExtResource("1_5rrbb")
+debug_range_visible = false
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2133071139]
 modulate = Color(1, 0, 0, 1)

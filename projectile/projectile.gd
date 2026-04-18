@@ -2,33 +2,71 @@ extends Area2D
 
 @export var speed: float = 300.0
 @export var damage: int  = 10
+@export var arc_height:float =80.0 # 0 = stright line
 
-var _target:Node2D = null
-var _direction: Vector2 =Vector2.ZERO
+#state
+var _start_pos:Vector2 =Vector2.ZERO
+var _land_pos:Vector2 =Vector2.ZERO # fixed world position, not the duck
+var _target_duck: Node2D =null # only used for damage on arrival
+var _travel_time: float = 0.0 # total seconds to reach land_pos
+var _elapsed: float = 0.0 # seconds since spawned
+var _active: bool = false
 
-#set up (called by spawner)
-func init(target:Node2D,start_pos:Vector2)->void:
-	global_position =start_pos
-	_target =target
+#set up (called by StructureEnemy)
+func init(target:Node2D,start:Vector2,land:Vector2)->void:
+	_target_duck = target
+	_start_pos = start
+	_land_pos = land
+	global_position =start
+	
+	# Travel time derived from distance so speed export stays intuitive
+	var dist: float =start.distance_to(land)
+	_travel_time =dist/speed # e.g. 200px / 300px/s = 0.67s
+	_elapsed =0.0
+	_active = true
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	#if target was freed(died), remove projectile
-	if not is_instance_valid(_target):
-		queue_free()
+	if not _active:
 		return
-	_direction =(_target.global_position - global_position).normalized()
-	global_position += _direction*speed*delta
-	look_at(_target.global_position)
 	
-	#Hit dection: close enough?
-	if global_position.distance_to(_target.global_position) <10.0:
-		_on_hit()
+	_elapsed+=delta
+	var t:float =clamp(_elapsed/_travel_time,0.0,1.0)
+	
+	#lerp start to land
+	var flat_pos: Vector2 =_start_pos.lerp(_land_pos,t)
+	
+	# Add arc offset on the Y axis (parabola peaks at t=0.5)
+	# sin(t*PI) is 0 at start, 1 at midpoint, 0 at end
+	var arc_offset: float = sin(t * PI) * arc_height
+	global_position = flat_pos - Vector2(0,arc_offset)
+	
+	#rotate sprite to face direction of travel
+	if t < 1.0:
+		var next_t:float = clamp((t + 0.02), 0.0, 1.0)
+		var next_flat := _start_pos.lerp(_land_pos, next_t)
+		var next_arc  := sin(next_t * PI) * arc_height
+		var next_pos  := next_flat - Vector2(0, next_arc)
+		look_at(next_pos)
+	
+	#landed
+	if t >= 1.0:
+		_on_land()
 
-func _on_hit()-> void:
-	#call take_damage if duck implements it
-	if _target.has_method("take_damage"):
-		_target.take_damage(damage)
-	else:
-		print("[Projectile] hit %s for %d damage (no take_damage method)" % [_target.name, damage])
+func _on_land()->void:
+	_active =false
+	
+	# Only deal damage if the duck is still close to the landing spot
+	# (duck dodged = no damage)
+	if is_instance_valid(_target_duck):
+		var duck_dist := _land_pos.distance_to((_target_duck as Node2D).global_position)
+		if duck_dist <= 32.0:
+			if _target_duck.has_method("take_damage"):
+				_target_duck.take_damage(damage)
+			else:
+				print("[Projectile] hit %s for %d (no take_damage)" % [_target_duck.name, damage])
+		else:
+			print("[Projectile] missed — duck moved %.0fpx away" % duck_dist)
+	
+	# TODO: spawn a landing dust/impact particle here
 	queue_free()

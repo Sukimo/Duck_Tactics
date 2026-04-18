@@ -10,7 +10,6 @@ polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(789, 8, 790, 393, 7, 391, 4, 3)])
 
 [node name="Arena2D" type="Node2D" unique_id=1399404612]
-position = Vector2(-1, -1)
 
 [node name="BG" type="ColorRect" parent="." unique_id=2118744463]
 offset_right = 800.0
@@ -89,7 +88,10 @@ grow_vertical = 0
 color = Color(0.3529412, 0.41960785, 0.078431375, 0.5882353)
 
 [node name="Duck" parent="." unique_id=811425380 instance=ExtResource("2_bj6xp")]
-position = Vector2(699, 94)
+position = Vector2(542, 94)
+
+[node name="Duck2" parent="." unique_id=825509446 instance=ExtResource("2_bj6xp")]
+position = Vector2(703, 94)
 
 [node name="StaticBody2D" parent="." unique_id=1750735628 instance=ExtResource("3_bj6xp")]
 position = Vector2(400, 200)
