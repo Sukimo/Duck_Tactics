@@ -2,7 +2,9 @@
 
 [ext_resource type="Texture2D" uid="uid://ce6o71538cywk" path="res://cube32.png" id="1_4ecip"]
 [ext_resource type="PackedScene" uid="uid://b5n1lfuy8wd1o" path="res://units/duck.tscn" id="2_bj6xp"]
-[ext_resource type="PackedScene" uid="uid://r0wmacbh07on" path="res://units/StructureEnemy .tscn" id="3_bj6xp"]
+[ext_resource type="PackedScene" uid="uid://r0wmacbh07on" path="res://enemies/StructureEnemy .tscn" id="3_bj6xp"]
+[ext_resource type="PackedScene" uid="uid://cyntornrl8nbf" path="res://units/melee_duck.tscn" id="4_xajys"]
+[ext_resource type="PackedScene" uid="uid://dg6buts2tf6ws" path="res://units/range_duck.tscn" id="5_7e173"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_4ecip"]
 vertices = PackedVector2Array(779.02344, 17.929688, 779.96875, 382.96875, 16.921875, 381.02344, 14.0703125, 13.0625)
@@ -90,8 +92,11 @@ color = Color(0.3529412, 0.41960785, 0.078431375, 0.5882353)
 [node name="Duck" parent="." unique_id=811425380 instance=ExtResource("2_bj6xp")]
 position = Vector2(542, 94)
 
-[node name="Duck2" parent="." unique_id=825509446 instance=ExtResource("2_bj6xp")]
-position = Vector2(703, 94)
-
 [node name="StaticBody2D" parent="." unique_id=1750735628 instance=ExtResource("3_bj6xp")]
 position = Vector2(400, 200)
+
+[node name="MeleeDuck" parent="." unique_id=1533052234 instance=ExtResource("4_xajys")]
+position = Vector2(672, 276)
+
+[node name="RangeDuck" parent="." unique_id=1850260188 instance=ExtResource("5_7e173")]
+position = Vector2(563, 317)

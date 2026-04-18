@@ -1,12 +1,12 @@
 [gd_scene format=3 uid="uid://r0wmacbh07on"]
 
-[ext_resource type="Script" uid="uid://3y0euv5dkv0l" path="res://units/structure_enemy.gd" id="1_5rrbb"]
+[ext_resource type="Script" uid="uid://3y0euv5dkv0l" path="res://enemies/structure_enemy.gd" id="1_5rrbb"]
 [ext_resource type="Texture2D" uid="uid://ce6o71538cywk" path="res://cube32.png" id="1_twuth"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_twuth"]
 size = Vector2(128, 128)
 
-[node name="StaticBody2D" type="StaticBody2D" unique_id=1750735628]
+[node name="StaticBody2D" type="StaticBody2D" unique_id=1750735628 groups=["enemies"]]
 script = ExtResource("1_5rrbb")
 debug_range_visible = false
 

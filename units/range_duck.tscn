@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://dg6buts2tf6ws"]
+
+[ext_resource type="Script" uid="uid://bqosdplvx2qo5" path="res://units/range_duck.gd" id="1_8fxrk"]
+[ext_resource type="Texture2D" uid="uid://ce6o71538cywk" path="res://cube32.png" id="2_xd7ve"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_txoiq"]
+size = Vector2(32, 32)
+
+[node name="RangeDuck" type="CharacterBody2D" unique_id=811425380 groups=["ducks"]]
+script = ExtResource("1_8fxrk")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=727289044]
+texture = ExtResource("2_xd7ve")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=472093862]
+shape = SubResource("RectangleShape2D_txoiq")
+
+[node name="NavAgent" type="NavigationAgent2D" parent="." unique_id=964559432]
