@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://b5n1lfuy8wd1o"]
+
+[ext_resource type="Texture2D" uid="uid://ce6o71538cywk" path="res://cube32.png" id="1_defs6"]
+[ext_resource type="Script" uid="uid://chhrvij7vrib2" path="res://units/duck.gd" id="1_txoiq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_txoiq"]
+size = Vector2(32, 32)
+
+[node name="Duck" type="CharacterBody2D" unique_id=811425380 groups=["ducks"]]
+script = ExtResource("1_txoiq")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=727289044]
+texture = ExtResource("1_defs6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=472093862]
+shape = SubResource("RectangleShape2D_txoiq")
+
+[node name="NavAgent" type="NavigationAgent2D" parent="." unique_id=964559432]

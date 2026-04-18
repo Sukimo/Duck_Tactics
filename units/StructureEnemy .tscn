@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://r0wmacbh07on"]
+
+[ext_resource type="Script" uid="uid://3y0euv5dkv0l" path="res://units/structure_enemy.gd" id="1_5rrbb"]
+[ext_resource type="Texture2D" uid="uid://ce6o71538cywk" path="res://cube32.png" id="1_twuth"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_twuth"]
+size = Vector2(128, 128)
+
+[node name="StaticBody2D" type="StaticBody2D" unique_id=1750735628]
+script = ExtResource("1_5rrbb")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2133071139]
+modulate = Color(1, 0, 0, 1)
+scale = Vector2(4, 4)
+texture = ExtResource("1_twuth")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=576021270]
+shape = SubResource("RectangleShape2D_twuth")
+
+[node name="AttackTimer" type="Timer" parent="." unique_id=739461920]
+
+[node name="ProjectileSpawn" type="Node2D" parent="." unique_id=584936081]
