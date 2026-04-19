@@ -16,3 +16,5 @@ texture = ExtResource("1_defs6")
 shape = SubResource("RectangleShape2D_txoiq")
 
 [node name="NavAgent" type="NavigationAgent2D" parent="." unique_id=964559432]
+
+[node name="AttackComponent" type="Node" parent="." unique_id=66196231]

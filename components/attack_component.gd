@@ -18,7 +18,7 @@ func _process(delta: float) -> void:
 func try_attack() -> void:
 	if _cooldown > 0.0:
 		return
-	var target = _find_nearest()
+	var target := _find_nearest()
 	if target == null:
 		return
 	var dist = _owner_node.global_position.distance_to(target.global_position)

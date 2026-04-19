@@ -73,6 +73,10 @@ func _process(delta: float) -> void:
 	
 	queue_redraw() #circle
 
+func take_damage(amount: int) -> void:
+	print("[StructureEnemy] %s took %d damage" % [name, amount])
+	
+
 #timer callback
 func _on_attack_timer_timeout()->void:
 	if _current_target == null:
