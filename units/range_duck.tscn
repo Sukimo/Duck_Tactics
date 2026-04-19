@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bqosdplvx2qo5" path="res://units/range_duck.gd" id="1_8fxrk"]
 [ext_resource type="Texture2D" uid="uid://ce6o71538cywk" path="res://cube32.png" id="2_xd7ve"]
+[ext_resource type="Script" uid="uid://c7w68xdn0asqh" path="res://components/range_attack.gd" id="3_xd7ve"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_txoiq"]
 size = Vector2(32, 32)
@@ -16,3 +17,11 @@ texture = ExtResource("2_xd7ve")
 shape = SubResource("RectangleShape2D_txoiq")
 
 [node name="NavAgent" type="NavigationAgent2D" parent="." unique_id=964559432]
+
+[node name="AttackComponent" type="Node" parent="." unique_id=189820681]
+script = ExtResource("3_xd7ve")
+projectile_speed = 200.0
+attack_range = 200.0
+attack_damage = 12
+attack_speed = 0.8
+target_group = "enemies"

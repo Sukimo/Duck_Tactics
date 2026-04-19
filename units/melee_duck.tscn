@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://ctvlk57sns1bt" path="res://units/melee_duck.gd" id="1_fydtf"]
 [ext_resource type="Texture2D" uid="uid://ce6o71538cywk" path="res://cube32.png" id="2_vt4yn"]
+[ext_resource type="Script" uid="uid://dufoubqahcdi" path="res://components/melee_attack.gd" id="3_vt4yn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_txoiq"]
 size = Vector2(32, 32)
@@ -16,3 +17,10 @@ texture = ExtResource("2_vt4yn")
 shape = SubResource("RectangleShape2D_txoiq")
 
 [node name="NavAgent" type="NavigationAgent2D" parent="." unique_id=964559432]
+
+[node name="AttackComponent" type="Node" parent="." unique_id=1904844528]
+script = ExtResource("3_vt4yn")
+flash_duration = 1.0
+attack_range = 45.0
+attack_damage = 25
+target_group = "enemies"

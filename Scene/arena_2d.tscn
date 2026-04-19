@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://4y65ctapxa7c"]
 
 [ext_resource type="Texture2D" uid="uid://ce6o71538cywk" path="res://cube32.png" id="1_4ecip"]
-[ext_resource type="PackedScene" uid="uid://b5n1lfuy8wd1o" path="res://units/duck.tscn" id="2_bj6xp"]
 [ext_resource type="PackedScene" uid="uid://r0wmacbh07on" path="res://enemies/StructureEnemy .tscn" id="3_bj6xp"]
 [ext_resource type="PackedScene" uid="uid://cyntornrl8nbf" path="res://units/melee_duck.tscn" id="4_xajys"]
 [ext_resource type="PackedScene" uid="uid://dg6buts2tf6ws" path="res://units/range_duck.tscn" id="5_7e173"]
@@ -88,9 +87,6 @@ offset_right = 19.0
 grow_horizontal = 2
 grow_vertical = 0
 color = Color(0.3529412, 0.41960785, 0.078431375, 0.5882353)
-
-[node name="Duck" parent="." unique_id=811425380 instance=ExtResource("2_bj6xp")]
-position = Vector2(542, 94)
 
 [node name="StaticBody2D" parent="." unique_id=1750735628 instance=ExtResource("3_bj6xp")]
 position = Vector2(400, 200)

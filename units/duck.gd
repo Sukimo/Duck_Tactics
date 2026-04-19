@@ -13,6 +13,8 @@ class_name BaseDuck
 #node refs
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var nav_agent: NavigationAgent2D =$NavAgent
+@onready var attack_component: AttackComponent = $AttackComponent  # add child node in scene
+
 
 var hp: int
 var _selected: bool =false
@@ -29,6 +31,10 @@ func _ready() -> void:
 	
 	set_process_input(true)
 	set_physics_process(true)
+
+func _draw() -> void:
+	if attack_component and attack_component.has_method("draw_debug"):
+		attack_component.draw_debug(self)
 
 # input
 func _input(event: InputEvent) -> void:
@@ -53,6 +59,7 @@ func _input(event: InputEvent) -> void:
 
 #physics process
 func _physics_process(delta: float) -> void:
+	attack_component.try_attack()
 	_attack_cooldown -= delta
 	
 	#auto-attack: find enemy, attack if in range
