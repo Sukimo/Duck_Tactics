@@ -21,6 +21,7 @@ shape = SubResource("RectangleShape2D_txoiq")
 [node name="AttackComponent" type="Node" parent="." unique_id=189820681]
 script = ExtResource("3_xd7ve")
 projectile_speed = 200.0
+arc_height = 0.0
 attack_range = 200.0
 attack_damage = 12
 attack_speed = 0.8

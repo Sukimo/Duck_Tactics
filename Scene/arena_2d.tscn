@@ -90,6 +90,7 @@ color = Color(0.3529412, 0.41960785, 0.078431375, 0.5882353)
 
 [node name="StaticBody2D" parent="." unique_id=1750735628 instance=ExtResource("3_bj6xp")]
 position = Vector2(400, 200)
+debug_range_visible = true
 
 [node name="MeleeDuck" parent="." unique_id=1533052234 instance=ExtResource("4_xajys")]
 position = Vector2(672, 276)

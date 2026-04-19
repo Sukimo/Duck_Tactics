@@ -21,6 +21,6 @@ shape = SubResource("RectangleShape2D_txoiq")
 [node name="AttackComponent" type="Node" parent="." unique_id=1904844528]
 script = ExtResource("3_vt4yn")
 flash_duration = 1.0
-attack_range = 45.0
+attack_range = 100.0
 attack_damage = 25
 target_group = "enemies"
