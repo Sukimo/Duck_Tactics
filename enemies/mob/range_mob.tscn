@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://b8nr1vd4mv203"]
+
+[ext_resource type="Script" uid="uid://cplbwj8agtfkr" path="res://enemies/mob.gd" id="1_mob"]
+[ext_resource type="Texture2D" uid="uid://ce6o71538cywk" path="res://cube32.png" id="2_6juje"]
+[ext_resource type="Script" uid="uid://c7w68xdn0asqh" path="res://components/range_attack.gd" id="2_mob"]
+[ext_resource type="PackedScene" uid="uid://b73q4bv6hdhkt" path="res://components/health_bar.tscn" id="3_mob"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mob"]
+size = Vector2(32, 32)
+
+[node name="RangeMob" type="CharacterBody2D" unique_id=200000001 groups=["enemies"]]
+script = ExtResource("1_mob")
+move_speed = 60.0
+max_hp = 40
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=200000002]
+modulate = Color(0.8, 0.5, 0.1, 1)
+texture = ExtResource("2_6juje")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=200000003]
+shape = SubResource("RectangleShape2D_mob")
+
+[node name="AttackComponent" type="Node" parent="." unique_id=200000004]
+script = ExtResource("2_mob")
+projectile_speed = 250.0
+arc_height = 0.0
+attack_range = 180.0
+attack_damage = 8
+attack_speed = 0.6
+target_group = "ducks"
+
+[node name="HealthBar" parent="." unique_id=200000005 instance=ExtResource("3_mob")]
