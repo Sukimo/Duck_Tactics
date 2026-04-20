@@ -18,6 +18,8 @@ config/icon="res://icon.svg"
 [autoload]
 
 MergeManager="*uid://c3h0ttb4su54s"
+SignalBus="*uid://2xoctt7gd0af"
+WaveManager="*uid://si0jjtwg7hgo"
 
 [display]
 

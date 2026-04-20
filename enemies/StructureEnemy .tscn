@@ -6,7 +6,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_twuth"]
 size = Vector2(128, 128)
 
-[node name="StaticBody2D" type="StaticBody2D" unique_id=1750735628 groups=["enemies"]]
+[node name="StaticBody2D" type="StaticBody2D" unique_id=1750735628 groups=["structures"]]
 script = ExtResource("1_5rrbb")
 debug_range_visible = false
 

@@ -69,7 +69,7 @@ func _on_contact() -> void:
 		_flash_pos = _pending_target.global_position
 		_flash_active = true
 		_flash_timer = flash_duration
-		print("[Melee] bump hit %s for %d" % [_pending_target.name, attack_damage])
+		#print("[Melee] bump hit %s for %d" % [_pending_target.name, attack_damage])
 	_pending_target = null
 
 func draw_debug(canvas: Node2D) -> void:

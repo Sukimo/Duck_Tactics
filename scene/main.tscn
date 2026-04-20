@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://doxjk6s3xb2my"]
+
+[ext_resource type="Script" uid="uid://6d18xl3y0q8j" path="res://scene/main.gd" id="1_itxqv"]
+[ext_resource type="PackedScene" uid="uid://4y65ctapxa7c" path="res://scene/arena_2d.tscn" id="2_v0l8b"]
+
+[node name="Node2D" type="Node2D" unique_id=286947507]
+script = ExtResource("1_itxqv")
+
+[node name="Arena2D" parent="." unique_id=1399404612 instance=ExtResource("2_v0l8b")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1420622116]
+
+[node name="HUD" type="Control" parent="CanvasLayer" unique_id=1529774423]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="CanvasLayer/HUD" unique_id=93715231]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "How is working..."
