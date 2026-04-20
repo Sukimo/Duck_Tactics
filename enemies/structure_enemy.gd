@@ -79,7 +79,7 @@ func take_damage(amount: int) -> void:
 
 #timer callback
 func _on_attack_timer_timeout()->void:
-	if _current_target == null:
+	if _current_target == null or not is_instance_valid(_current_target):
 		return
 	_begin_windup(_current_target)
 
