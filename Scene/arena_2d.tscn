@@ -2,8 +2,8 @@
 
 [ext_resource type="Texture2D" uid="uid://ce6o71538cywk" path="res://cube32.png" id="1_4ecip"]
 [ext_resource type="PackedScene" uid="uid://r0wmacbh07on" path="res://enemies/StructureEnemy .tscn" id="3_bj6xp"]
-[ext_resource type="PackedScene" uid="uid://cyntornrl8nbf" path="res://units/melee_duck.tscn" id="4_xajys"]
-[ext_resource type="PackedScene" uid="uid://dg6buts2tf6ws" path="res://units/range_duck.tscn" id="5_7e173"]
+[ext_resource type="PackedScene" uid="uid://cyntornrl8nbf" path="res://units/ducks/melee_duck.tscn" id="4_xajys"]
+[ext_resource type="PackedScene" uid="uid://dg6buts2tf6ws" path="res://units/ducks/range_duck.tscn" id="5_7e173"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_4ecip"]
 vertices = PackedVector2Array(778.9531, 17.929688, 777.0469, 426, 20.84375, 426, 14.15625, 13.0625)
@@ -94,6 +94,9 @@ debug_range_visible = true
 
 [node name="MeleeDuck" parent="." unique_id=1533052234 instance=ExtResource("4_xajys")]
 position = Vector2(672, 276)
+
+[node name="MeleeDuck2" parent="." unique_id=811425380 instance=ExtResource("4_xajys")]
+position = Vector2(700, 316)
 
 [node name="RangeDuck" parent="." unique_id=1850260188 instance=ExtResource("5_7e173")]
 position = Vector2(563, 317)

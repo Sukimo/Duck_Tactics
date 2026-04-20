@@ -6,6 +6,14 @@ class_name BaseDuck
 @export var selected_color: Color=Color(1.0,0.85,0.0,1.0) #yellow tint
 @export var normal_color: Color= Color(1.0, 1.0,  1.0, 1.0)  #white
 
+@export var duck_level: int =1
+
+const HOLD_THRESHOLD: float =0.15 # seconds to distinguish click vs hold-drag
+
+var _mouse_held: bool =false
+var _hold_timer: float = 0.0
+var _is_dragging: bool = false
+
 #node refs
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var nav_agent: NavigationAgent2D =$NavAgent
@@ -28,31 +36,63 @@ func _draw() -> void:
 
 # input
 func _input(event: InputEvent) -> void:
-	if not (event is InputEventMouseButton 
-			and event.button_index == MOUSE_BUTTON_LEFT 
-			and event.pressed):
-		return
-	var click_world:= get_global_mouse_position()
-	#player click this duck?
-	if _is_click_on_self(click_world):
-		_set_selected(true)
+	#drag pick-up
+	if (event is InputEventMouseButton 
+			and event.button_index == MOUSE_BUTTON_LEFT): 
+		var world := get_global_mouse_position()
+		
+		#press
+		if event.is_pressed():
+			if _is_click_on_self(world):
+				#start hold timer clikc or drag in _process
+				_mouse_held=true
+				_hold_timer=0.0
+				get_viewport().set_input_as_handled()
+			elif _selected:
+				#clicked world while selected move command
+				_move_to(world)
+				_set_selected(false)
+				get_viewport().set_input_as_handled()
+			return
+		#release
+		if not event.is_pressed():
+			if _is_dragging:
+				#end drag > attempt merge
+				_is_dragging=false
+				z_index=0
+				_has_target =false
+				_try_merge_at(world)
+				get_viewport().set_input_as_handled()
+			elif _mouse_held:
+				#release before hold threshold > treat as plain click >select
+				_mouse_held =false
+				_set_selected(true)
+				get_viewport().set_input_as_handled()
+			return
+	#drag follow
+	if event is InputEventMouseMotion and _is_dragging:
+		global_position =get_global_mouse_position()
 		get_viewport().set_input_as_handled()
-		return
-	#click as move 
-	if _selected:
-		_move_to(click_world)
-		_set_selected(false)
-		get_viewport().set_input_as_handled()
-
+		
+func _process(delta: float) -> void:
+	if _mouse_held and not _is_dragging:
+		_hold_timer += delta
+		if _hold_timer >= HOLD_THRESHOLD:
+			#crossed threshold > become drag
+			_mouse_held=false
+			_is_dragging=true
+			_has_target =false #stop while dragging
+			velocity = Vector2.ZERO
+			z_index = 10 #render on top
+			
 #physics process
 func _physics_process(delta: float) -> void:
 	attack_component.try_attack()
 	_do_movement()
-	
-func can_move()-> bool: return true
 
+func can_move()-> bool: return true
 func _do_movement()->void:
-	if not can_move() or not _has_target:
+	if not can_move() or not _has_target or _is_dragging:
 		velocity =Vector2.ZERO
 		return
 	if not nav_agent.is_navigation_finished():
@@ -78,11 +118,12 @@ func take_damage(amount: int) -> void:
 	#print("[Duck] %s took %d dmg (%d/%d)" % [name, amount, hp, max_hp])
 	if hp <= 0:
 		die()
-
 func die() -> void:
 	print("[Duck] %s died" % name)
 	queue_free()
 
+func duck_type()-> String:
+	return "Baseduck"
 #helpers
 func _is_click_on_self(world_pos:Vector2) -> bool:
 	#AABB check (32x32) centered on origin
@@ -99,6 +140,18 @@ func _move_to(pos:Vector2)->void:
 	_target_pos =pos
 	_has_target =true
 	nav_agent.target_position =pos
+
+func _try_merge_at(drop_world: Vector2)->void:
+	# Find any duck under the drop point (except self)
+	for duck in get_tree().get_nodes_in_group("ducks"):
+		if duck == self or not duck is BaseDuck:
+			continue
+		var other := duck as BaseDuck
+		var half := Vector2(20,20)
+		var rect := Rect2(other.global_position- half,half*2)
+		if rect.has_point(drop_world):
+			MergeManager.try_merge(self,other)
+			return
 
 #public API
 func get_selected()->bool:
