@@ -73,7 +73,9 @@ func _do_movement()->void:
 
 func take_damage(amount: int) -> void:
 	hp -=amount
-	print("[Duck] %s took %d dmg (%d/%d)" % [name, amount, hp, max_hp])
+	if has_node("HealthBar"):
+		$HealthBar.update(hp,max_hp)
+	#print("[Duck] %s took %d dmg (%d/%d)" % [name, amount, hp, max_hp])
 	if hp <= 0:
 		die()
 
