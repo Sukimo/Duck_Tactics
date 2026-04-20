@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cyntornrl8nbf"]
 
 [ext_resource type="Script" uid="uid://ctvlk57sns1bt" path="res://units/melee_duck.gd" id="1_fydtf"]
-[ext_resource type="Texture2D" uid="uid://ce6o71538cywk" path="res://cube32.png" id="2_vt4yn"]
+[ext_resource type="Texture2D" uid="uid://djumuu38bf2o8" path="res://sprites/duckNearest_v1.png" id="2_vt4yn"]
 [ext_resource type="Script" uid="uid://dufoubqahcdi" path="res://components/melee_attack.gd" id="3_vt4yn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_txoiq"]
@@ -11,6 +11,7 @@ size = Vector2(32, 32)
 script = ExtResource("1_fydtf")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=727289044]
+texture_filter = 1
 texture = ExtResource("2_vt4yn")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=472093862]

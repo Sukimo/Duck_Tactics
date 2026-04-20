@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dg6buts2tf6ws"]
 
 [ext_resource type="Script" uid="uid://bqosdplvx2qo5" path="res://units/range_duck.gd" id="1_8fxrk"]
-[ext_resource type="Texture2D" uid="uid://ce6o71538cywk" path="res://cube32.png" id="2_xd7ve"]
+[ext_resource type="Texture2D" uid="uid://brtc57awtjdat" path="res://sprites/duck_v1.png" id="2_xd7ve"]
 [ext_resource type="Script" uid="uid://c7w68xdn0asqh" path="res://components/range_attack.gd" id="3_xd7ve"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_txoiq"]

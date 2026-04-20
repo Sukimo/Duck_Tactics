@@ -6,15 +6,15 @@
 [ext_resource type="PackedScene" uid="uid://dg6buts2tf6ws" path="res://units/range_duck.tscn" id="5_7e173"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_4ecip"]
-vertices = PackedVector2Array(779.02344, 17.929688, 779.96875, 382.96875, 16.921875, 381.02344, 14.0703125, 13.0625)
+vertices = PackedVector2Array(778.9531, 17.929688, 777.0469, 426, 20.84375, 426, 14.15625, 13.0625)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(789, 8, 790, 393, 7, 391, 4, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(789, 8, 787, 436, 11, 436, 4, 3)])
 
 [node name="Arena2D" type="Node2D" unique_id=1399404612]
 
 [node name="BG" type="ColorRect" parent="." unique_id=2118744463]
 offset_right = 800.0
-offset_bottom = 400.0
+offset_bottom = 450.0
 color = Color(0.65882355, 0.9019608, 0.11372549, 1)
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1840305265]
