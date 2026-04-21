@@ -1,11 +1,14 @@
 [gd_scene format=3 uid="uid://byttr52pjh1fx"]
 
+[ext_resource type="Script" uid="uid://dxehcqq2vk2u3" path="res://scene/rest_zone.gd" id="1_fwway"]
+
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_iviiw"]
 vertices = PackedVector2Array(785, 434.96875, 18.953125, 433.02344, 17.039063, 20.976563, 785, 20.007813)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(7, 11, 795, 10, 795, 445, 9, 443)])
 
 [node name="RestZone" type="Node2D" unique_id=557027119]
+script = ExtResource("1_fwway")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=209558263]
 custom_minimum_size = Vector2(800, 450)
