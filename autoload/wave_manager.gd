@@ -29,7 +29,8 @@ var _spawn_timer : Timer
 
 func start_game() -> void:
 	wave_index = 0
-	GameState.change(GameState.State.REST)
+	GameState.change(GameState.State.SLIDE_TO_ARENA)
+	_begin_prep()
 
 # Called by Main when camera finishes sliding TO arena
 func on_arrived_at_arena() -> void:
@@ -37,6 +38,11 @@ func on_arrived_at_arena() -> void:
 
 # Called by "Ready" button or prep timer expiry
 func begin_battle() -> void:
+	 # Place any ducks still sitting in slots
+	var prep_ui = get_tree().current_scene.get_node_or_null("CanvasLayer/PrepUI")
+	if prep_ui:
+		prep_ui.place_remaining()
+		
 	GameState.change(GameState.State.BATTLE)
 	emit_signal("wave_started", wave_index + 1)
 	_build_spawn_queue()
@@ -49,6 +55,16 @@ func on_arrived_at_rest() -> void:
 # ── Phases ────────────────────────────────────────────────────────────────
 func _begin_prep() -> void:
 	GameState.change(GameState.State.PREP)
+	
+	#collect all ducks currently in the scene
+	var ducks:Array=[]
+	for d in get_tree().get_nodes_in_group("ducks"):
+		ducks.append(d)
+	#give the to PrepUI
+	var prep_ui =get_tree().current_scene.get_node_or_null("CanvasLayer/PrepUI")
+	if prep_ui:
+		prep_ui.populate(ducks)
+	
 	_timer.wait_time = PREP_TIME
 	_timer.one_shot  = true
 	_timer.start()

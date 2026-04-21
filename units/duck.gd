@@ -43,7 +43,7 @@ func _input(event: InputEvent) -> void:
 		var world := get_global_mouse_position()
 		
 		#press
-		if event.is_pressed():
+		if event.pressed:
 			if _is_click_on_self(world):
 				#start hold timer clikc or drag in _process
 				_mouse_held=true
@@ -56,7 +56,7 @@ func _input(event: InputEvent) -> void:
 				get_viewport().set_input_as_handled()
 			return
 		#release
-		if not event.is_pressed():
+		if not event.pressed:
 			if _is_dragging:
 				#end drag > attempt merge
 				_is_dragging=false

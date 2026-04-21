@@ -9,6 +9,7 @@ extends Node2D
 
 const SLIDE_DURATION : float = 0.6
 func _ready() -> void:
+	camera.global_position.x = 0.0
 	WaveManager.wave_started.connect(_on_wave_started)
 	WaveManager.wave_cleared.connect(_on_wave_cleared)
 	WaveManager.all_waves_cleared.connect(_on_all_cleared)

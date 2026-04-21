@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://6d18xl3y0q8j" path="res://scene/main.gd" id="1_itxqv"]
 [ext_resource type="PackedScene" uid="uid://4y65ctapxa7c" path="res://scene/arena_2d.tscn" id="2_v0l8b"]
 [ext_resource type="PackedScene" uid="uid://byttr52pjh1fx" path="res://scene/rest_zone.tscn" id="3_wp4xf"]
+[ext_resource type="Script" uid="uid://delclna7dru0q" path="res://scene/prepare_ui.gd" id="4_brvut"]
 
 [node name="Node2D" type="Node2D" unique_id=286947507]
 script = ExtResource("1_itxqv")
@@ -28,3 +29,22 @@ layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
 text = "How is working..."
+
+[node name="PrepUI" type="Control" parent="CanvasLayer" unique_id=1051206559]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_brvut")
+metadata/_edit_use_anchors_ = true
+
+[node name="SlotBar" type="HBoxContainer" parent="CanvasLayer/PrepUI" unique_id=1267715122]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
