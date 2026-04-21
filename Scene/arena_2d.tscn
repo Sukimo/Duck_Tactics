@@ -53,16 +53,10 @@ grow_vertical = 0
 color = Color(0.3529412, 0.41960785, 0.078431375, 0.5882353)
 
 [node name="MeleeDuck" parent="." unique_id=1533052234 instance=ExtResource("4_xajys")]
-position = Vector2(672, 276)
-
-[node name="MeleeDuck3" parent="." unique_id=811425380 instance=ExtResource("4_xajys")]
-position = Vector2(153, 230)
-
-[node name="MeleeDuck2" parent="." unique_id=1242216967 instance=ExtResource("4_xajys")]
-position = Vector2(700, 316)
+position = Vector2(50, 50)
 
 [node name="RangeDuck" parent="." unique_id=1850260188 instance=ExtResource("5_7e173")]
-position = Vector2(563, 317)
+position = Vector2(87, 50)
 
 [node name="RangeDuck2" parent="." unique_id=572959942 instance=ExtResource("5_7e173")]
-position = Vector2(563, 379)
+position = Vector2(124, 50)
