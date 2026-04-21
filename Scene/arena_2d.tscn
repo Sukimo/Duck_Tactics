@@ -16,9 +16,6 @@ offset_right = 800.0
 offset_bottom = 450.0
 color = Color(0.65882355, 0.9019608, 0.11372549, 1)
 
-[node name="Camera2D" type="Camera2D" parent="." unique_id=1840305265]
-anchor_mode = 0
-
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="." unique_id=1392470367]
 navigation_polygon = SubResource("NavigationPolygon_4ecip")
 

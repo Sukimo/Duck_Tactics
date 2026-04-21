@@ -2,11 +2,18 @@
 
 [ext_resource type="Script" uid="uid://6d18xl3y0q8j" path="res://scene/main.gd" id="1_itxqv"]
 [ext_resource type="PackedScene" uid="uid://4y65ctapxa7c" path="res://scene/arena_2d.tscn" id="2_v0l8b"]
+[ext_resource type="PackedScene" uid="uid://byttr52pjh1fx" path="res://scene/rest_zone.tscn" id="3_wp4xf"]
 
 [node name="Node2D" type="Node2D" unique_id=286947507]
 script = ExtResource("1_itxqv")
 
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1802948480]
+anchor_mode = 0
+
 [node name="Arena2D" parent="." unique_id=1399404612 instance=ExtResource("2_v0l8b")]
+
+[node name="RestZone" parent="." unique_id=557027119 instance=ExtResource("3_wp4xf")]
+position = Vector2(-800, 0)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1420622116]
 

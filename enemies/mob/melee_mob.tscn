@@ -21,6 +21,6 @@ shape = SubResource("RectangleShape2D_mob")
 [node name="AttackComponent" type="Node" parent="." unique_id=100000004]
 script = ExtResource("2_mob")
 attack_range = 40.0
-target_group = "ducks"
+target_group = Array[String](["ducks"])
 
 [node name="HealthBar" parent="." unique_id=100000005 instance=ExtResource("3_mob")]

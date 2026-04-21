@@ -25,6 +25,6 @@ script = ExtResource("3_i5qc3")
 flash_duration = 1.0
 attack_range = 100.0
 attack_damage = 999
-target_group = "enemies"
+target_group = Array[String](["enemies", "structures"])
 
 [node name="HealthBar" parent="." unique_id=968690896 instance=ExtResource("4_1fcf5")]

@@ -69,7 +69,11 @@ func _process(delta: float) -> void:
 		_windup_elapsed += delta
 		if _windup_elapsed >= windup_time:
 			_windup_active=false
+			
+		if is_instance_valid(_windup_target):
 			_fire_projectile(_windup_target,_windup_pos)
+		else:
+			_windup_target = null
 	
 	queue_redraw() #circle
 

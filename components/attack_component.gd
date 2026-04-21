@@ -4,7 +4,7 @@ class_name AttackComponent
 @export var attack_range: float = 60.0
 @export var attack_damage: int = 10
 @export var attack_speed: float = 1.0  # attacks/sec
-@export var target_group: String = ""  # "enemies" or "ducks"
+@export var target_group: Array[String] = []  # "enemies" or "ducks"
 
 var _cooldown: float = 0.0
 var _owner_node: Node2D = null
@@ -33,11 +33,12 @@ func do_attack(target: Node2D) -> void:
 func _find_nearest() -> Node2D:
 	var best: Node2D = null
 	var best_dist: float = attack_range
-	for unit in get_tree().get_nodes_in_group(target_group):
-		if not unit is Node2D:
-			continue
-		var d := _owner_node.global_position.distance_to((unit as Node2D).global_position)
-		if d <= best_dist:
-			best_dist = d
-			best = unit
+	for group in target_group:
+		for unit in get_tree().get_nodes_in_group(group):
+			if not unit is Node2D:
+				continue
+			var d := _owner_node.global_position.distance_to((unit as Node2D).global_position)
+			if d <= best_dist:
+				best_dist = d
+				best = unit
 	return best

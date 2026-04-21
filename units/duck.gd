@@ -13,6 +13,7 @@ const HOLD_THRESHOLD: float =0.15 # seconds to distinguish click vs hold-drag
 var _mouse_held: bool =false
 var _hold_timer: float = 0.0
 var _is_dragging: bool = false
+var _drag_origin: Vector2 = Vector2.ZERO
 
 #node refs
 @onready var sprite: Sprite2D = $Sprite2D
@@ -81,6 +82,7 @@ func _process(delta: float) -> void:
 			#crossed threshold > become drag
 			_mouse_held=false
 			_is_dragging=true
+			_drag_origin = global_position
 			_has_target =false #stop while dragging
 			velocity = Vector2.ZERO
 			z_index = 10 #render on top
@@ -152,6 +154,7 @@ func _try_merge_at(drop_world: Vector2)->void:
 		if rect.has_point(drop_world):
 			MergeManager.try_merge(self,other)
 			return
+	global_position = _drag_origin
 
 #public API
 func get_selected()->bool:

@@ -27,6 +27,6 @@ arc_height = 0.0
 attack_range = 180.0
 attack_damage = 8
 attack_speed = 0.6
-target_group = "ducks"
+target_group = Array[String](["ducks"])
 
 [node name="HealthBar" parent="." unique_id=200000005 instance=ExtResource("3_mob")]

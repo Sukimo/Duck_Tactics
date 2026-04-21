@@ -1,0 +1,53 @@
+[gd_scene format=3 uid="uid://byttr52pjh1fx"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_iviiw"]
+vertices = PackedVector2Array(785, 434.96875, 18.953125, 433.02344, 17.039063, 20.976563, 785, 20.007813)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(7, 11, 795, 10, 795, 445, 9, 443)])
+
+[node name="RestZone" type="Node2D" unique_id=557027119]
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=209558263]
+custom_minimum_size = Vector2(800, 450)
+offset_right = 40.0
+offset_bottom = 40.0
+color = Color(0.65882355, 0.9019608, 0.11372549, 1)
+
+[node name="ColorRect2" type="ColorRect" parent="." unique_id=1985844877]
+custom_minimum_size = Vector2(200, 100)
+offset_left = 47.0
+offset_top = 66.0
+offset_right = 247.0
+offset_bottom = 166.0
+color = Color(0, 0.746, 1.353, 1)
+
+[node name="ColorRect3" type="ColorRect" parent="." unique_id=2131600776]
+custom_minimum_size = Vector2(200, 200)
+offset_left = 47.0
+offset_top = 179.0
+offset_right = 247.0
+offset_bottom = 279.0
+color = Color(1.2729731, 0.2652823, 1.1543377e-06, 1)
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="." unique_id=5542326]
+navigation_polygon = SubResource("NavigationPolygon_iviiw")
+
+[node name="Control" type="Control" parent="." unique_id=116860005]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Button" type="Button" parent="Control" unique_id=1356934591]
+layout_mode = 0
+offset_left = 600.0
+offset_top = 225.0
+offset_right = 745.0
+offset_bottom = 256.0
+text = "Start new battle !!"
+
+[node name="Label" type="Label" parent="Control" unique_id=539178152]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Rest Zone"
