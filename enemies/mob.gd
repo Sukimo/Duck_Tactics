@@ -15,6 +15,8 @@ func _ready() -> void:
 func _physics_process(_delta: float) -> void:
 	_current_target =_find_nearest_duck()
 	attack_component.try_attack(_current_target)
+	if attack_component.has_method("is_bumping") and attack_component.is_bumping():
+		return
 	_move_toward_nearest_duck()
 
 func _move_toward_nearest_duck() -> void:

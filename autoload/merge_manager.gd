@@ -27,19 +27,31 @@ func try_merge(a: BaseDuck, b: BaseDuck)-> void:
 		return
 	
 	var spawn_pos: Vector2 = b.global_position
+	
+	# remove both originals from roster Before freeing
+	DuckRoster.remove(a)
+	DuckRoster.remove(b)
+	
+	# spawn merged duck
 	var scene: PackedScene = load(MERGE_TABLE[key])
 	var merged: Node = scene.instantiate()
-	
 	get_tree().current_scene.add_child(merged)
-	if merged is BaseDuck:
-		(merged as BaseDuck).global_position =spawn_pos
-		(merged as BaseDuck).duck_level =next_level
 	
+	if merged is BaseDuck:
+		var m:= merged as BaseDuck
+		m.global_position =spawn_pos
+		m.duck_level =next_level
+	
+		DuckRoster.add(m)
+		if b.roster_status == DuckRoster.Status.DEPLOYED:
+			DuckRoster.deploy(m,spawn_pos)
+			
 	#destory both originals
 	a.queue_free()
 	b.queue_free()
 	print("[Merge] %s lv%d + lv%d → lv%d" % [a.duck_type(), a.duck_level, b.duck_level, next_level])
-
+	SignalBus.emit_signal("duck_merged",merged)
+	
 func _snap_back(_duck:BaseDuck)-> void:
 	# Duck is already at drop position — nothing to do.
 	# If you want snap-back animation, tween it back to _origin here.

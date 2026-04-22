@@ -39,6 +39,9 @@ func _draw() -> void:
 
 # input
 func _input(event: InputEvent) -> void:
+	if roster_status != DuckRoster.Status.DEPLOYED: 
+		return
+	
 	#drag pick-up
 	if (event is InputEventMouseButton 
 			and event.button_index == MOUSE_BUTTON_LEFT): 
@@ -77,7 +80,13 @@ func _input(event: InputEvent) -> void:
 		global_position =get_global_mouse_position()
 		get_viewport().set_input_as_handled()
 		
+#process
 func _process(delta: float) -> void:
+	if roster_status != DuckRoster.Status.DEPLOYED:
+		_mouse_held = false
+		_is_dragging = false
+		return
+	
 	if _mouse_held and not _is_dragging:
 		_hold_timer += delta
 		if _hold_timer >= HOLD_THRESHOLD:
@@ -91,6 +100,9 @@ func _process(delta: float) -> void:
 			
 #physics process
 func _physics_process(delta: float) -> void:
+	if roster_status != DuckRoster.Status.DEPLOYED:
+		velocity = Vector2.ZERO
+		return
 	attack_component.try_attack()
 	_do_movement()
 
@@ -122,11 +134,15 @@ func take_damage(amount: int) -> void:
 	#print("[Duck] %s took %d dmg (%d/%d)" % [name, amount, hp, max_hp])
 	if hp <= 0:
 		die()
+		
 func die() -> void:
 	print("[Duck] %s died" % name)
+	_set_selected(false)
+	_mouse_held = false
+	_is_dragging = false
+	_has_target  = false
+	velocity = Vector2.ZERO
 	DuckRoster.mark_dead(self)
-	# do NOT queue_free here — roster keeps the node alive until clear_dead()
-	# add death animation/particle here if you want before roster clears it
 	
 func duck_type()-> String:
 	return "Baseduck"
