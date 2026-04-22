@@ -70,9 +70,9 @@ func on_arrived_at_rest() -> void:
 func _begin_prep() -> void:
 	GameState.change(GameState.State.PREP)
 	#give the to PrepUI
-	var prep_ui =get_tree().current_scene.get_node_or_null("CanvasLayer/PrepUI")
+	var prep_ui = get_tree().current_scene.get_node_or_null("CanvasLayer/PrepUI")
+	var rest_zone= get_tree().current_scene.get_node_or_null("RestZone") 
 	if prep_ui:
-		var rest_zone = get_tree().current_scene.get_node_or_null("RestZone")
 		var roster : Array = []
 		if rest_zone and rest_zone.has_method("get_battle_roster"):
 			roster = rest_zone.get_battle_roster()
@@ -142,19 +142,13 @@ func _on_wave_cleared() -> void:
 		return
 		
 	# Get the list of ducks currently in BattleZone BEFORE recalling
-	var battle_keepers : Array[BaseDuck] = []
 	var rest_zone = get_tree().current_scene.get_node_or_null("RestZone")
-	if rest_zone and rest_zone.has_method("get_battle_roster"):
-		battle_keepers = rest_zone.get_battle_roster()
+	if rest_zone and rest_zone.has_method("snapshot_deployed"):
+		rest_zone.snapshot_deployed()
 	
-	# Recall everyone first
+	# Recall + dead cleanup
 	DuckRoster.recall_all()   # deployed → resting
 	DuckRoster.clear_dead()   # free dead nodes
-	
-	# Re-deploy the BattleZone ducks so they stay in place
-	for duck in battle_keepers:
-		if is_instance_valid(duck):
-			DuckRoster.deploy(duck,duck.global_position)
 	
 	wave_index += 1
 	if wave_index >= WAVE_DATA.size():

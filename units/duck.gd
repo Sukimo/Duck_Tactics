@@ -5,7 +5,6 @@ class_name BaseDuck
 @export var max_hp: int =100
 @export var selected_color: Color=Color(1.0,0.85,0.0,1.0) #yellow tint
 @export var normal_color: Color= Color(1.0, 1.0,  1.0, 1.0)  #white
-
 @export var duck_level: int =1
 
 const HOLD_THRESHOLD: float =0.15 # seconds to distinguish click vs hold-drag
@@ -39,9 +38,6 @@ func _draw() -> void:
 
 # input
 func _input(event: InputEvent) -> void:
-	if roster_status != DuckRoster.Status.DEPLOYED: 
-		return
-	
 	#drag pick-up
 	if (event is InputEventMouseButton 
 			and event.button_index == MOUSE_BUTTON_LEFT): 
@@ -82,11 +78,6 @@ func _input(event: InputEvent) -> void:
 		
 #process
 func _process(delta: float) -> void:
-	if roster_status != DuckRoster.Status.DEPLOYED:
-		_mouse_held = false
-		_is_dragging = false
-		return
-	
 	if _mouse_held and not _is_dragging:
 		_hold_timer += delta
 		if _hold_timer >= HOLD_THRESHOLD:
@@ -100,9 +91,6 @@ func _process(delta: float) -> void:
 			
 #physics process
 func _physics_process(delta: float) -> void:
-	if roster_status != DuckRoster.Status.DEPLOYED:
-		velocity = Vector2.ZERO
-		return
 	attack_component.try_attack()
 	_do_movement()
 
@@ -137,15 +125,49 @@ func take_damage(amount: int) -> void:
 		
 func die() -> void:
 	print("[Duck] %s died" % name)
-	_set_selected(false)
-	_mouse_held = false
-	_is_dragging = false
-	_has_target  = false
-	velocity = Vector2.ZERO
+	reset_state()
 	DuckRoster.mark_dead(self)
 	
-func duck_type()-> String:
-	return "Baseduck"
+#state
+## Clears every piece of in-flight state so the duck is completely inert.
+## Called by DuckRoster.recall_all() after every wave.
+func reset_state()->void:
+	# Input / drag
+	_selected    = false
+	_mouse_held  = false
+	_is_dragging = false
+	_hold_timer  = 0.0
+	z_index      = 0
+	if sprite:
+		sprite.modulate = normal_color
+ 
+	# Movement
+	_has_target = false
+	_target_pos = Vector2.ZERO
+	velocity    = Vector2.ZERO
+ 
+	# NavAgent — cancel any queued path
+	if is_instance_valid(nav_agent):
+		nav_agent.target_position = global_position  # point at self = no movement
+ 
+	# Attack cooldown reset so it doesn't fire instantly next deployment
+	if is_instance_valid(attack_component):
+		attack_component._cooldown = 0.0
+
+#merge drop
+func _try_merge_at(drop_world: Vector2)->void:
+	# Find any duck under the drop point (except self)
+	for duck in get_tree().get_nodes_in_group("ducks"):
+		if duck == self or not duck is BaseDuck:
+			continue
+		var other := duck as BaseDuck
+		var half := Vector2(20,20)
+		var rect := Rect2(other.global_position- half,half*2)
+		if rect.has_point(drop_world):
+			MergeManager.try_merge(self,other)
+			return
+	global_position = _drag_origin
+
 #helpers
 func _is_click_on_self(world_pos:Vector2) -> bool:
 	#AABB check (32x32) centered on origin
@@ -163,23 +185,11 @@ func _move_to(pos:Vector2)->void:
 	_has_target =true
 	nav_agent.target_position =pos
 
-func _try_merge_at(drop_world: Vector2)->void:
-	# Find any duck under the drop point (except self)
-	for duck in get_tree().get_nodes_in_group("ducks"):
-		if duck == self or not duck is BaseDuck:
-			continue
-		var other := duck as BaseDuck
-		var half := Vector2(20,20)
-		var rect := Rect2(other.global_position- half,half*2)
-		if rect.has_point(drop_world):
-			MergeManager.try_merge(self,other)
-			return
-	global_position = _drag_origin
-
 #public API
 func get_selected()->bool:
 	return _selected
-
+func duck_type()-> String:
+	return "Baseduck"
 ## Called externally (merge system, game manager) to reposition the duck.
 func force_move(pos:Vector2)->void:
 	_move_to(pos)

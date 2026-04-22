@@ -1,6 +1,5 @@
 extends Node
 # Autoload as "DuckRoster"
-# Add to project.godot: DuckRoster="*res://autoload/duck_roster.gd"
 
 signal roster_changed
 
@@ -35,8 +34,8 @@ func set_status(duck: BaseDuck, status: Status) -> void:
 		duck.visible = false
 		duck.process_mode = Node.PROCESS_MODE_DISABLED
 	elif status == Status.RESTING:
-		duck.visible = false
-		duck.process_mode = Node.PROCESS_MODE_DISABLED
+		duck.process_mode = Node.PROCESS_MODE_INHERIT
+		duck.visible = true
 	elif status == Status.DEPLOYED:
 		duck.visible = true
 		duck.process_mode = Node.PROCESS_MODE_INHERIT
@@ -55,6 +54,8 @@ func mark_dead(duck: BaseDuck) -> void:
 func recall_all() -> void:
 	_purge_invalid()
 	for duck in get_deployed():
+		if duck.has_method("rest_state"):
+			duck.reset_state()
 		set_status(duck, Status.RESTING)
 	emit_signal("roster_changed")
 
