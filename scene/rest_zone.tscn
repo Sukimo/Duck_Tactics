@@ -2,6 +2,9 @@
 
 [ext_resource type="Script" uid="uid://dxehcqq2vk2u3" path="res://scene/rest_zone.gd" id="1_fwway"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fwway"]
+size = Vector2(200, 100)
+
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_iviiw"]
 vertices = PackedVector2Array(785, 434.96875, 18.953125, 433.02344, 17.039063, 20.976563, 785, 20.007813)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
@@ -22,7 +25,14 @@ offset_left = 47.0
 offset_top = 66.0
 offset_right = 247.0
 offset_bottom = 166.0
+size_flags_horizontal = 4
 color = Color(0, 0.746, 1.353, 1)
+
+[node name="Area2D" type="Area2D" parent="ColorRect2" unique_id=1311230392]
+position = Vector2(100, 50)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ColorRect2/Area2D" unique_id=1071119646]
+shape = SubResource("RectangleShape2D_fwway")
 
 [node name="ColorRect3" type="ColorRect" parent="." unique_id=2131600776]
 custom_minimum_size = Vector2(200, 200)
@@ -34,6 +44,8 @@ color = Color(1.2729731, 0.2652823, 1.1543377e-06, 1)
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="." unique_id=5542326]
 navigation_polygon = SubResource("NavigationPolygon_iviiw")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=12842832]
 
 [node name="Control" type="Control" parent="." unique_id=116860005]
 layout_mode = 3
@@ -51,8 +63,10 @@ text = "Start new battle !!"
 
 [node name="Label" type="Label" parent="Control" unique_id=539178152]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+offset_left = 48.0
+offset_top = 36.0
+offset_right = 125.0
+offset_bottom = 59.0
 text = "Rest Zone"
 
 [connection signal="pressed" from="Control/Button" to="." method="_on_button_pressed"]

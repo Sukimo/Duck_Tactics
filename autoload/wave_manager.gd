@@ -82,9 +82,6 @@ func _begin_reward() -> void:
 	GameState.change(GameState.State.REWARD)
 	emit_signal("wave_cleared")
 	_give_reward()
-	_timer.wait_time = REWARD_TIME
-	_timer.one_shot  = true
-	_timer.start()
 
 # ── Spawn ─────────────────────────────────────────────────────────────────
 func _build_spawn_queue() -> void:
@@ -150,25 +147,14 @@ func _on_phase_timer_timeout() -> void:
 	match GameState.current:
 		GameState.State.PREP:
 			begin_battle()
-		GameState.State.REWARD:
-			# slide camera back to rest
-			GameState.change(GameState.State.SLIDE_TO_REST)
-			SignalBus.emit_signal("slide_to_rest")
 
 # ── Reward ────────────────────────────────────────────────────────────────
 func _give_reward() -> void:
-	var duck_pool : Array = [
-		"res://units/ducks/melee_duck.tscn",
-		"res://units/ducks/range_duck.tscn",
-	]
-	for i in 2:
-		var path : String = duck_pool[randi() % duck_pool.size()]
-		var duck : Node = (load(path) as PackedScene).instantiate()
-		get_tree().current_scene.add_child(duck)
-		if duck is BaseDuck:
-			DuckRoster.add(duck as BaseDuck)
-			# status defaults to RESTING inside DuckRoster.add()
-			# visible=false and process disabled is handled by set_status()
+	pass # RewardUI._on_state_changed(REWARD) handles everything now
+
+func on_reward_confirmed() -> void:
+	GameState.change(GameState.State.SLIDE_TO_REST)
+	SignalBus.emit_signal("slide_to_rest")
 
 # ── Ready ─────────────────────────────────────────────────────────────────
 func _ready() -> void:
