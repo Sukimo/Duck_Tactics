@@ -22,6 +22,12 @@ const WAVE_DATA : Array = [
 	]},
 ]
 
+const STARTER_DUCKS : Array = [
+	"res://units/ducks/melee_duck.tscn",
+	"res://units/ducks/range_duck.tscn",
+	"res://units/ducks/melee_duck.tscn",
+] 
+
 var wave_index   : int   = 0
 var _timer       : Timer
 var _spawn_queue : Array = []
@@ -29,9 +35,17 @@ var _spawn_timer : Timer
 
 func start_game() -> void:
 	wave_index = 0
+	_spawn_starter_duck()
 	GameState.change(GameState.State.SLIDE_TO_ARENA)
 	_begin_prep()
 
+func _spawn_starter_duck()->void:
+	for path in STARTER_DUCKS:
+		var duck: Node = (load(path) as PackedScene).instantiate()
+		get_tree().current_scene.add_child(duck)
+		if duck is BaseDuck:
+			DuckRoster.add(duck as BaseDuck)
+	
 # Called by Main when camera finishes sliding TO arena
 func on_arrived_at_arena() -> void:
 	_begin_prep()
@@ -55,15 +69,10 @@ func on_arrived_at_rest() -> void:
 # ── Phases ────────────────────────────────────────────────────────────────
 func _begin_prep() -> void:
 	GameState.change(GameState.State.PREP)
-	
-	#collect all ducks currently in the scene
-	var ducks:Array=[]
-	for d in get_tree().get_nodes_in_group("ducks"):
-		ducks.append(d)
 	#give the to PrepUI
 	var prep_ui =get_tree().current_scene.get_node_or_null("CanvasLayer/PrepUI")
 	if prep_ui:
-		prep_ui.populate(ducks)
+		prep_ui.populate(DuckRoster.get_resting())  # only resting ducks go to slots
 	
 	_timer.wait_time = PREP_TIME
 	_timer.one_shot  = true
@@ -127,6 +136,8 @@ func _check_enemies_dead() -> void:
 func _on_wave_cleared() -> void:
 	if not GameState.is_state(GameState.State.BATTLE):
 		return
+	DuckRoster.recall_all() # deployed > resting:
+	DuckRoster.clear_dead() # free dead nodes
 	wave_index += 1
 	if wave_index >= WAVE_DATA.size():
 		GameState.change(GameState.State.WIN)
@@ -154,11 +165,10 @@ func _give_reward() -> void:
 		var path : String = duck_pool[randi() % duck_pool.size()]
 		var duck : Node = (load(path) as PackedScene).instantiate()
 		get_tree().current_scene.add_child(duck)
-		if duck is Node2D:
-			(duck as Node2D).global_position = Vector2(
-				randf_range(550, 700),
-				randf_range(80, 370)
-			)
+		if duck is BaseDuck:
+			DuckRoster.add(duck as BaseDuck)
+			# status defaults to RESTING inside DuckRoster.add()
+			# visible=false and process disabled is handled by set_status()
 
 # ── Ready ─────────────────────────────────────────────────────────────────
 func _ready() -> void:

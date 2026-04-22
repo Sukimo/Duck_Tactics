@@ -15,6 +15,8 @@ var _hold_timer: float = 0.0
 var _is_dragging: bool = false
 var _drag_origin: Vector2 = Vector2.ZERO
 
+var roster_status = DuckRoster.Status.RESTING
+
 #node refs
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var nav_agent: NavigationAgent2D =$NavAgent
@@ -122,8 +124,10 @@ func take_damage(amount: int) -> void:
 		die()
 func die() -> void:
 	print("[Duck] %s died" % name)
-	queue_free()
-
+	DuckRoster.mark_dead(self)
+	# do NOT queue_free here — roster keeps the node alive until clear_dead()
+	# add death animation/particle here if you want before roster clears it
+	
 func duck_type()-> String:
 	return "Baseduck"
 #helpers

@@ -15,15 +15,15 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	_cooldown -= delta
 
-func try_attack() -> void:
+func try_attack(target: Node2D = null) -> void:
 	if _cooldown > 0.0:
 		return
-	var target := _find_nearest()
-	if target == null:
+	var t := target if target != null else _find_nearest()
+	if t == null:
 		return
-	var dist = _owner_node.global_position.distance_to(target.global_position)
+	var dist = _owner_node.global_position.distance_to(t.global_position)
 	if dist <= attack_range:
-		do_attack(target)
+		do_attack(t)
 		_cooldown = 1.0 / attack_speed
 
 # Override in children
@@ -36,6 +36,8 @@ func _find_nearest() -> Node2D:
 	for group in target_group:
 		for unit in get_tree().get_nodes_in_group(group):
 			if not unit is Node2D:
+				continue
+			if not is_instance_valid(unit):
 				continue
 			var d := _owner_node.global_position.distance_to((unit as Node2D).global_position)
 			if d <= best_dist:

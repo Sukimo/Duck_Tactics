@@ -1,8 +1,6 @@
 [gd_scene format=3 uid="uid://4y65ctapxa7c"]
 
 [ext_resource type="Texture2D" uid="uid://ce6o71538cywk" path="res://cube32.png" id="1_4ecip"]
-[ext_resource type="PackedScene" uid="uid://cyntornrl8nbf" path="res://units/ducks/melee_duck.tscn" id="4_xajys"]
-[ext_resource type="PackedScene" uid="uid://dg6buts2tf6ws" path="res://units/ducks/range_duck.tscn" id="5_7e173"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_4ecip"]
 vertices = PackedVector2Array(778.9531, 17.929688, 777.0469, 426, 20.84375, 426, 14.15625, 13.0625)
@@ -51,12 +49,3 @@ offset_right = 19.0
 grow_horizontal = 2
 grow_vertical = 0
 color = Color(0.3529412, 0.41960785, 0.078431375, 0.5882353)
-
-[node name="MeleeDuck" parent="." unique_id=1533052234 instance=ExtResource("4_xajys")]
-position = Vector2(50, 50)
-
-[node name="RangeDuck" parent="." unique_id=1850260188 instance=ExtResource("5_7e173")]
-position = Vector2(87, 50)
-
-[node name="RangeDuck2" parent="." unique_id=572959942 instance=ExtResource("5_7e173")]
-position = Vector2(124, 50)

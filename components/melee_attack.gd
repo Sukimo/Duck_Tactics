@@ -22,10 +22,10 @@ var _flash_timer: float = 0.0
 var _flash_pos: Vector2 = Vector2.ZERO
 var _flash_active: bool = false
 
-func try_attack()->void:
+func try_attack(target: Node2D = null)->void:
 	if _state != BumpState.IDLE:
 		return
-	super.try_attack()
+	super.try_attack(target)
 
 func do_attack(target: Node2D) -> void:
 	_pending_target = target

@@ -29,14 +29,14 @@ func _ready() -> void:
 		#bind index correctly for each slot
 		panel.gui_input.connect(func(event): _on_slot_input(event,i))
 		slot_bar.add_child(panel)
-		slot_ducks.append(panel)
+		_slot_panels.append(panel)
 		
-	GameState.state_changed.connect(_on_state_chenged)
+	GameState.state_changed.connect(_on_state_changed)
 	visible =false
-	
+	DuckRoster.roster_changed.connect(_update_slot_visuals)
 	_update_slot_visuals()
 
-func _on_state_chenged(s: GameState.State)->void:
+func _on_state_changed(s: GameState.State)->void:
 	visible = s == GameState.State.PREP
 	if not visible:
 		_cancel_selection()
@@ -64,8 +64,7 @@ func place_remaining()->void:
 	for i in MAX_SLOT:
 		var duck = slot_ducks[i]
 		if duck != null and is_instance_valid(duck):
-			duck.visible =true
-			duck.global_position = default_positions[pos_idx % default_positions.size()]
+			DuckRoster.deploy(duck,default_positions[pos_idx % default_positions.size()])
 			pos_idx += 1
 			slot_ducks[i]=null
 	_update_slot_visuals()
@@ -123,8 +122,7 @@ func _cancel_selection()->void:
 	_update_slot_visuals()
 
 func _place_duck(duck: BaseDuck, world_pos: Vector2)->void:
-	duck.visible =true
-	duck.global_position =world_pos
+	DuckRoster.deploy(duck,world_pos) # handles visible + process_mode
 	slot_ducks[_selected_slot] =null
 	print("[PrepUI] Placed %s at %s" % [duck.name, world_pos])
 	_cancel_selection()
@@ -135,7 +133,9 @@ func _click_is_on_slot_bar(screen_pos: Vector2)-> bool:
 
 #visuals
 func _update_slot_visuals()->void: 
-	if _slot_panels.is_empty(): return
+	if _slot_panels.is_empty(): 
+		return
+		
 	for i in MAX_SLOT:
 		var panel : Panel = _slot_panels[i]
 		var tex : TextureRect = panel.get_node("TextureRect")

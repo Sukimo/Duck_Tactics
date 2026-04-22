@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 SignalBus="*uid://2xoctt7gd0af"
 GameState="*uid://dnkl72qm3p414"
+DuckRoster="*uid://dy5i5h08s75gd"
 MergeManager="*uid://c3h0ttb4su54s"
 WaveManager="*uid://si0jjtwg7hgo"
 
