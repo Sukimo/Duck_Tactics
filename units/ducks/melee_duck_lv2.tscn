@@ -10,6 +10,7 @@ size = Vector2(32, 32)
 
 [node name="MeleeDuck" type="CharacterBody2D" unique_id=811425380 groups=["ducks"]]
 script = ExtResource("1_2whgl")
+max_hp = 250
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=727289044]
 texture_filter = 1
@@ -22,9 +23,11 @@ shape = SubResource("RectangleShape2D_txoiq")
 
 [node name="AttackComponent" type="Node" parent="." unique_id=1904844528]
 script = ExtResource("3_i5qc3")
+bump_speed = 450.0
+return_speed = 250.0
 flash_duration = 1.0
-attack_range = 100.0
-attack_damage = 999
+attack_range = 40.0
+attack_damage = 55
 target_group = Array[String](["enemies", "structures"])
 
 [node name="HealthBar" parent="." unique_id=968690896 instance=ExtResource("4_1fcf5")]

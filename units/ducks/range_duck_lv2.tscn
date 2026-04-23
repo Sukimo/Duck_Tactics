@@ -10,6 +10,7 @@ size = Vector2(32, 32)
 
 [node name="RangeDuck" type="CharacterBody2D" unique_id=811425380 groups=["ducks"]]
 script = ExtResource("1_wadj7")
+max_hp = 200
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=727289044]
 texture = ExtResource("2_wadj7")
@@ -21,11 +22,11 @@ shape = SubResource("RectangleShape2D_txoiq")
 
 [node name="AttackComponent" type="Node" parent="." unique_id=189820681]
 script = ExtResource("3_tamc0")
-projectile_speed = 200.0
+projectile_speed = 280.0
 arc_height = 0.0
 attack_range = 200.0
-attack_damage = 12
-attack_speed = 10.0
+attack_damage = 25
+attack_speed = 0.9
 target_group = Array[String](["enemies", "structures"])
 
 [node name="HealthBar" parent="." unique_id=968690896 instance=ExtResource("4_7kq42")]

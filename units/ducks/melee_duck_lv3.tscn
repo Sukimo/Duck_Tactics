@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://boyaqb0bnuoc5"]
+
+[ext_resource type="Script" uid="uid://ctvlk57sns1bt" path="res://units/melee_duck.gd" id="1_h3cub"]
+[ext_resource type="Texture2D" uid="uid://dp8kctvok25q5" path="res://sprites/duck_pixel.png" id="2_bnak2"]
+[ext_resource type="Script" uid="uid://dufoubqahcdi" path="res://components/melee_attack.gd" id="3_dmmjv"]
+[ext_resource type="PackedScene" uid="uid://b73q4bv6hdhkt" path="res://components/health_bar.tscn" id="4_gkj5i"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_txoiq"]
+size = Vector2(32, 32)
+
+[node name="MeleeDuck" type="CharacterBody2D" unique_id=811425380 groups=["ducks"]]
+script = ExtResource("1_h3cub")
+max_hp = 600
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=727289044]
+texture_filter = 1
+texture = ExtResource("2_bnak2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=472093862]
+shape = SubResource("RectangleShape2D_txoiq")
+
+[node name="NavAgent" type="NavigationAgent2D" parent="." unique_id=964559432]
+
+[node name="AttackComponent" type="Node" parent="." unique_id=1904844528]
+script = ExtResource("3_dmmjv")
+bump_distance = 20.0
+bump_speed = 550.0
+return_speed = 300.0
+flash_duration = 1.0
+attack_range = 40.0
+attack_damage = 130
+attack_speed = 1.1
+target_group = Array[String](["enemies", "structures"])
+
+[node name="HealthBar" parent="." unique_id=968690896 instance=ExtResource("4_gkj5i")]

@@ -6,8 +6,10 @@ extends Node
 const MERGE_TABLE: Dictionary ={
 	["MeleeDuck",1]:"res://units/ducks/melee_duck.tscn",
 	["MeleeDuck", 2]: "res://units/ducks/melee_duck_lv2.tscn",
+	["MeleeDuck", 3]: "res://units/ducks/melee_duck_lv3.tscn",
 	["RangeDuck", 1]: "res://units/ducks/range_duck.tscn",
 	["RangeDuck", 2]: "res://units/ducks/range_duck_lv2.tscn",
+	["RangeDuck", 3]: "res://units/ducks/range_duck_lv3.tscn",
 }
 
 func try_merge(a: BaseDuck, b: BaseDuck)-> void:

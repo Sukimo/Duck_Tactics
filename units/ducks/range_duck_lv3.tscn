@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://csjas8wxtkvbm"]
+
+[ext_resource type="Script" uid="uid://bqosdplvx2qo5" path="res://units/range_duck.gd" id="1_3tfy2"]
+[ext_resource type="Texture2D" uid="uid://buop3gdorari2" path="res://sprites/duck_range.png" id="2_f77gm"]
+[ext_resource type="Script" uid="uid://c7w68xdn0asqh" path="res://components/range_attack.gd" id="3_apcc8"]
+[ext_resource type="PackedScene" uid="uid://b73q4bv6hdhkt" path="res://components/health_bar.tscn" id="4_y85dp"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_txoiq"]
+size = Vector2(32, 32)
+
+[node name="RangeDuck" type="CharacterBody2D" unique_id=811425380 groups=["ducks"]]
+script = ExtResource("1_3tfy2")
+max_hp = 450
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=727289044]
+texture = ExtResource("2_f77gm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=472093862]
+shape = SubResource("RectangleShape2D_txoiq")
+
+[node name="NavAgent" type="NavigationAgent2D" parent="." unique_id=964559432]
+
+[node name="AttackComponent" type="Node" parent="." unique_id=189820681]
+script = ExtResource("3_apcc8")
+projectile_speed = 350.0
+arc_height = 0.0
+attack_range = 200.0
+attack_damage = 55
+target_group = Array[String](["enemies", "structures"])
+
+[node name="HealthBar" parent="." unique_id=968690896 instance=ExtResource("4_y85dp")]
