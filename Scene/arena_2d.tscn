@@ -49,3 +49,26 @@ offset_right = 19.0
 grow_horizontal = 2
 grow_vertical = 0
 color = Color(0.3529412, 0.41960785, 0.078431375, 0.5882353)
+
+[node name="Control" type="Control" parent="." unique_id=1844710980]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="Control" unique_id=918171041]
+layout_mode = 0
+offset_left = 616.0
+offset_top = 311.0
+offset_right = 779.0
+offset_bottom = 448.0
+theme_override_font_sizes/font_size = 100
+text = "15s"
+
+[node name="Label2" type="Label" parent="Control" unique_id=1170442707]
+layout_mode = 0
+offset_left = 444.0
+offset_top = 398.0
+offset_right = 620.0
+offset_bottom = 421.0
+text = "Before ducks deployed"

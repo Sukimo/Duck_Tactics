@@ -2,14 +2,14 @@
 
 [ext_resource type="Script" uid="uid://cwfkr3kh6wyru" path="res://scene/rest_zone.gd" id="1_fwway"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_heal"]
-size = Vector2(220, 310)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_battle"]
-size = Vector2(180, 310)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fwway"]
+size = Vector2(200, 310)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pool"]
 size = Vector2(300, 310)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_battle"]
+size = Vector2(200, 310)
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_iviiw"]
 vertices = PackedVector2Array(785, 434.96875, 18.953125, 433.02344, 17.039063, 20.976563, 785, 20.007813)
@@ -26,16 +26,23 @@ offset_bottom = 450.0
 color = Color(0.54901963, 0.78039217, 0.050980393, 1)
 
 [node name="HealZone" type="Area2D" parent="." unique_id=300000001 groups=["heal_zone"]]
-position = Vector2(150, 185)
+position = Vector2(135, 215)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HealZone" unique_id=300000002]
-shape = SubResource("RectangleShape2D_heal")
+shape = SubResource("RectangleShape2D_fwway")
 
 [node name="ZoneRect" type="ColorRect" parent="HealZone" unique_id=300000003]
-offset_left = -110.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
 offset_top = -155.0
-offset_right = 110.0
+offset_right = 100.0
 offset_bottom = 155.0
+grow_horizontal = 2
+grow_vertical = 2
 color = Color(0.05, 0.55, 0.85, 0.75)
 
 [node name="ZoneLabel" type="Label" parent="HealZone" unique_id=300000004]
@@ -46,6 +53,7 @@ offset_bottom = -110.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 14
 text = "Heal Area"
+horizontal_alignment = 1
 
 [node name="ZoneSubLabel" type="Label" parent="HealZone" unique_id=300000005]
 offset_left = -100.0
@@ -56,18 +64,65 @@ theme_override_colors/font_color = Color(0.8, 0.95, 1, 0.85)
 theme_override_font_sizes/font_size = 10
 text = "Resting ducks
 heal here"
+horizontal_alignment = 1
+
+[node name="PoolZone" type="Area2D" parent="." unique_id=300000021 groups=["pool_zone"]]
+position = Vector2(400, 215)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PoolZone" unique_id=300000022]
+shape = SubResource("RectangleShape2D_pool")
+
+[node name="ZoneRect" type="ColorRect" parent="PoolZone" unique_id=300000023]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -155.0
+offset_right = 150.0
+offset_bottom = 155.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.55, 0.78, 0.05, 0.75)
+
+[node name="ZoneLabel" type="Label" parent="PoolZone" unique_id=300000024]
+offset_left = -140.0
+offset_top = -145.0
+offset_right = 140.0
+offset_bottom = -110.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 14
+text = "Pool of Ducks"
+
+[node name="ZoneSubLabel" type="Label" parent="PoolZone" unique_id=300000025]
+offset_left = -140.0
+offset_top = -105.0
+offset_right = 140.0
+offset_bottom = -70.0
+theme_override_colors/font_color = Color(0.9, 1, 0.8, 0.9)
+theme_override_font_sizes/font_size = 10
+text = "Every duck you have
+will stay here"
 
 [node name="BattleZone" type="Area2D" parent="." unique_id=300000011 groups=["battle_zone"]]
-position = Vector2(372, 185)
+position = Vector2(665, 215)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BattleZone" unique_id=300000012]
 shape = SubResource("RectangleShape2D_battle")
 
 [node name="ZoneRect" type="ColorRect" parent="BattleZone" unique_id=300000013]
-offset_left = -90.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
 offset_top = -155.0
-offset_right = 90.0
+offset_right = 100.0
 offset_bottom = 155.0
+grow_horizontal = 2
+grow_vertical = 2
 color = Color(0.85, 0.1, 0.1, 0.8)
 
 [node name="ZoneLabel" type="Label" parent="BattleZone" unique_id=300000014]
@@ -90,38 +145,6 @@ theme_override_font_sizes/font_size = 10
 text = "Drag ducks here
 to send to battle"
 horizontal_alignment = 1
-
-[node name="PoolZone" type="Area2D" parent="." unique_id=300000021 groups=["pool_zone"]]
-position = Vector2(628, 185)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PoolZone" unique_id=300000022]
-shape = SubResource("RectangleShape2D_pool")
-
-[node name="ZoneRect" type="ColorRect" parent="PoolZone" unique_id=300000023]
-offset_left = -150.0
-offset_top = -155.0
-offset_right = 150.0
-offset_bottom = 155.0
-color = Color(0.55, 0.78, 0.05, 0.75)
-
-[node name="ZoneLabel" type="Label" parent="PoolZone" unique_id=300000024]
-offset_left = -140.0
-offset_top = -145.0
-offset_right = 140.0
-offset_bottom = -110.0
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_font_sizes/font_size = 14
-text = "Pool of Ducks"
-
-[node name="ZoneSubLabel" type="Label" parent="PoolZone" unique_id=300000025]
-offset_left = -140.0
-offset_top = -105.0
-offset_right = 140.0
-offset_bottom = -70.0
-theme_override_colors/font_color = Color(0.9, 1, 0.8, 0.9)
-theme_override_font_sizes/font_size = 10
-text = "Every duck you have
-will stay here"
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="." unique_id=5542326]
 navigation_polygon = SubResource("NavigationPolygon_iviiw")
@@ -155,17 +178,17 @@ text = "▶  Start Battle"
 
 [node name="Divider1" type="ColorRect" parent="Control" unique_id=500000001]
 layout_mode = 0
-offset_left = 268.0
+offset_left = 242.0
 offset_top = 30.0
-offset_right = 271.0
+offset_right = 245.0
 offset_bottom = 395.0
 color = Color(1, 1, 1, 0.12)
 
 [node name="Divider2" type="ColorRect" parent="Control" unique_id=500000002]
 layout_mode = 0
-offset_left = 470.0
+offset_left = 556.0
 offset_top = 30.0
-offset_right = 473.0
+offset_right = 559.0
 offset_bottom = 395.0
 color = Color(1, 1, 1, 0.12)
 

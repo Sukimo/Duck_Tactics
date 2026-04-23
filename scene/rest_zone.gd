@@ -6,12 +6,10 @@ extends Node2D
 #   PoolZone  (green) — default landing zone for all ducks, no special logic
 
 # ── Constants ───────────────────────────────────────────────────────────────
-#BattleZone rect approx: x 330..510, y 30..370  (center x=420, half=90)
-const BATTLE_ORIGIN: Vector2 = Vector2(335,55)
+const BATTLE_ORIGIN: Vector2 = Vector2(605,70)
 const BATTLE_COLS: int = 3
 
-#PoolZone rect approx: x 510..810, y 30..370  (center x=660, half=150)
-const POOL_ORIGIN : Vector2 = Vector2(520,55)
+const POOL_ORIGIN : Vector2 = Vector2(280,70)
 const POOL_COLS : int = 5
 
 #RestZone local-space boundary for enemy push-out
@@ -41,6 +39,7 @@ func _process(delta: float) -> void:
 func _on_button_pressed() -> void:
 	if not GameState.is_state(GameState.State.REST):
 		return
+	_apply_heal_zone_restore()
 	SignalBus.emit_signal("slide_to_arena")
 
 # ── Zone overlap signals  ───────────────────────────────────────────────────
@@ -144,6 +143,9 @@ func _place_returned_ducks_in_battle_zone() -> void:
 		duck.global_position = to_global(local_pos)
 		duck.visible         = true
 		duck.process_mode    = Node.PROCESS_MODE_INHERIT
+		
+		if not _ducks_in_battle.has(duck):
+			_ducks_in_battle.append(duck)
 	_last_wave_deployed.clear()
 	
 # ── Scatter all other resting ducks into Pool (green) zone ───────────────────
