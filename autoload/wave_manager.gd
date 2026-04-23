@@ -128,6 +128,14 @@ func _do_spawn(scene_path: String) -> void:
 func _check_enemies_dead() -> void:
 	if not GameState.is_state(GameState.State.BATTLE):
 		return
+		
+	var alive_duck := DuckRoster.count_deployed()
+	var duck_in_storage := DuckRoster.count_resting()
+	
+	if alive_duck == 0:
+		_on_all_duck_dead()
+		return
+		
 	if not _spawn_queue.is_empty():
 		return
 	var alive := 0
@@ -137,6 +145,27 @@ func _check_enemies_dead() -> void:
 	if alive == 0:
 		_on_wave_cleared()
 
+func _on_all_duck_dead()-> void:
+	if not GameState.is_state(GameState.State.BATTLE):
+		return
+		
+	GameState.lives -=1
+	print("[WaveManager] Duck wipe! Lives left: %d" % GameState.lives)
+	
+	_spawn_queue.clear()
+	for e in get_tree().get_nodes_in_group("enemies"):
+		if is_instance_valid(e):
+			e.queue_free()
+	
+	if GameState.lives <= 0:
+		GameState.change(GameState.State.GAME_OVER)
+	else: 
+		DuckRoster.recall_all()
+		DuckRoster.clear_dead()
+		SignalBus.emit_signal("slide_to_rest")
+		GameState.change(GameState.State.SLIDE_TO_REST)
+		
+		
 func _on_wave_cleared() -> void:
 	if not GameState.is_state(GameState.State.BATTLE):
 		return
@@ -152,6 +181,7 @@ func _on_wave_cleared() -> void:
 	
 	wave_index += 1
 	if wave_index >= WAVE_DATA.size():
+		#wave_index = 0
 		GameState.change(GameState.State.WIN)
 		emit_signal("all_waves_cleared")
 		return
@@ -163,6 +193,23 @@ func _on_phase_timer_timeout() -> void:
 		GameState.State.PREP:
 			begin_battle()
 
+func _on_roster_changed()->void:
+	if not GameState.is_state(GameState.State.PREP):
+		return
+	if DuckRoster.count_resting() == 0:
+		if _timer and _timer.time_left > 5.0:
+			_fast_forward_prep()
+		
+func _fast_forward_prep()->void:
+	if GameState.is_state(GameState.State.PREP) and _timer.time_left > 5.0:
+		_timer.start(5.0)
+		print("[WaveManager] All ducks placed! Fast-forwarding to 5s.")
+		
+func get_time_left()->float:
+	if _timer and not _timer.is_stopped():
+		return _timer.time_left
+	return 0.0
+		
 # ── Reward ────────────────────────────────────────────────────────────────
 func _give_reward() -> void:
 	pass # RewardUI._on_state_changed(REWARD) handles everything now
@@ -187,3 +234,5 @@ func _ready() -> void:
 	poll.timeout.connect(_check_enemies_dead)
 	add_child(poll)
 	poll.start()
+	
+	DuckRoster.roster_changed.connect(_on_roster_changed)

@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://4y65ctapxa7c"]
 
 [ext_resource type="Texture2D" uid="uid://ce6o71538cywk" path="res://cube32.png" id="1_4ecip"]
+[ext_resource type="Script" uid="uid://cjmhdf54xpda" path="res://scene/arena_zone.gd" id="1_bj6xp"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_4ecip"]
 vertices = PackedVector2Array(778.9531, 17.929688, 777.0469, 426, 20.84375, 426, 14.15625, 13.0625)
@@ -8,6 +9,7 @@ polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(789, 8, 787, 436, 11, 436, 4, 3)])
 
 [node name="Arena2D" type="Node2D" unique_id=1399404612]
+script = ExtResource("1_bj6xp")
 
 [node name="BG" type="ColorRect" parent="." unique_id=2118744463]
 offset_right = 800.0
@@ -56,7 +58,15 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Label" type="Label" parent="Control" unique_id=918171041]
+[node name="Label" type="Label" parent="Control" unique_id=1170442707]
+layout_mode = 0
+offset_left = 444.0
+offset_top = 398.0
+offset_right = 620.0
+offset_bottom = 421.0
+text = "Before ducks deployed"
+
+[node name="TimeLabel" type="Label" parent="Control" unique_id=918171041]
 layout_mode = 0
 offset_left = 616.0
 offset_top = 311.0
@@ -64,11 +74,4 @@ offset_right = 779.0
 offset_bottom = 448.0
 theme_override_font_sizes/font_size = 100
 text = "15s"
-
-[node name="Label2" type="Label" parent="Control" unique_id=1170442707]
-layout_mode = 0
-offset_left = 444.0
-offset_top = 398.0
-offset_right = 620.0
-offset_bottom = 421.0
-text = "Before ducks deployed"
+horizontal_alignment = 2

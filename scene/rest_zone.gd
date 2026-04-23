@@ -173,4 +173,4 @@ func _update_hud() -> void:
 	var duck_count : int = DuckRoster.count_total()
 	# Money: hook up GameState.money when you add an economy system
 	var money : int = 0
-	hud_label.text = "Wave: %d   Ducks: %d   Money: %d" % [wave_num, duck_count, money]
+	hud_label.text = "Wave: %d   Ducks: %d   ❤: %d" % [wave_num, duck_count, GameState.lives]

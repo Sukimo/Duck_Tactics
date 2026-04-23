@@ -15,6 +15,7 @@ enum State{
 signal state_changed(new_state: State)
 
 var current: State = State .REST
+var lives: int = 3
 
 func change(new_state: State)->void:
 	if current ==null:
@@ -25,3 +26,7 @@ func change(new_state: State)->void:
 
 func is_state(s:State)->bool:
 	return current == s 
+	
+func reset() ->void: 
+	lives = 3
+	current =State.REST
