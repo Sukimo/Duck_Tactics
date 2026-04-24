@@ -1,8 +1,10 @@
 [gd_scene format=3 uid="uid://d0pcprq85rcxs"]
 
 [ext_resource type="Script" uid="uid://b243qmnjlsg2r" path="res://canvas/story_end_ui.gd" id="1_30not"]
+[ext_resource type="Texture2D" uid="uid://bmtean7vxxpch" path="res://sprites/grape_duck_drink.png" id="2_kib4l"]
 
 [node name="StoryEndUI" type="Control" unique_id=131595864]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -12,14 +14,22 @@ grow_vertical = 2
 script = ExtResource("1_30not")
 
 [node name="Overlay" type="ColorRect" parent="." unique_id=297756602]
-custom_minimum_size = Vector2(48, 48)
+custom_minimum_size = Vector2(128, 128)
 layout_mode = 0
-offset_left = 333.0
-offset_top = 173.0
-offset_right = 381.0
-offset_bottom = 221.0
+offset_left = 240.0
+offset_top = 180.0
+offset_right = 368.0
+offset_bottom = 308.0
 mouse_filter = 2
-color = Color(0, 0, 0, 0.7058824)
+color = Color(0, 0, 0, 0.22745098)
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=765864817]
+layout_mode = 0
+offset_left = 238.0
+offset_top = 179.0
+offset_right = 366.0
+offset_bottom = 307.0
+texture = ExtResource("2_kib4l")
 
 [node name="Panel" type="Panel" parent="." unique_id=880944574]
 layout_mode = 1
@@ -38,7 +48,7 @@ offset_bottom = 40.0
 
 [node name="TitleLabel" type="Label" parent="Panel/VBox" unique_id=1712378150]
 layout_mode = 2
-text = "\"The grape is next storll... \""
+text = "\"The grape is next stand... \""
 
 [node name="BodyLabel" type="Label" parent="Panel/VBox" unique_id=1043034897]
 layout_mode = 2

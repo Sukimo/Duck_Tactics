@@ -14,14 +14,18 @@ script = ExtResource("1_m6qic")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=878299474]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 598.0
+offset_top = 2.0
+offset_right = 798.0
+offset_bottom = 62.0
 color = Color(1, 1, 0.6, 1)
 
 [node name="Panel" type="Panel" parent="." unique_id=977055014]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 646.0
+offset_top = 14.0
+offset_right = 686.0
+offset_bottom = 54.0
 
 [node name="VBox" type="HBoxContainer" parent="Panel" unique_id=1327712883]
 layout_mode = 0

@@ -21,3 +21,6 @@ Thumbs.db
 # Editor metadata
 *.tmp
 *.bak
+/Win
+/Exports
+export_presets.cfg
