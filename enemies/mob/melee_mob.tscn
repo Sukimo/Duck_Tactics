@@ -1,7 +1,8 @@
 [gd_scene format=3 uid="uid://dvgbw0s1xoi4i"]
 
 [ext_resource type="Script" uid="uid://cplbwj8agtfkr" path="res://enemies/mob.gd" id="1_mob"]
-[ext_resource type="Texture2D" uid="uid://ce6o71538cywk" path="res://cube32.png" id="2_ucrmo"]
+[ext_resource type="PackedScene" uid="uid://5rwfmlf77lu1" path="res://effects/shadow.tscn" id="2_1qx1d"]
+[ext_resource type="Texture2D" uid="uid://gc3xp72lpp6w" path="res://sprites/bullet_sour.png" id="3_jm2o8"]
 [ext_resource type="PackedScene" uid="uid://b73q4bv6hdhkt" path="res://components/health_bar.tscn" id="3_mob"]
 [ext_resource type="Script" uid="uid://dawbwoa67ybhs" path="res://components/mob_melee_attack.gd" id="3_ucrmo"]
 
@@ -11,9 +12,10 @@ size = Vector2(32, 32)
 [node name="MeleeMob" type="CharacterBody2D" unique_id=100000001 groups=["enemies"]]
 script = ExtResource("1_mob")
 
+[node name="Shadow" parent="." unique_id=2108032700 instance=ExtResource("2_1qx1d")]
+
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=100000002]
-modulate = Color(0.09773452, 0.44051942, 0.8644789, 1)
-texture = ExtResource("2_ucrmo")
+texture = ExtResource("3_jm2o8")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=100000003]
 shape = SubResource("RectangleShape2D_mob")

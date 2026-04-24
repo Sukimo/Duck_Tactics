@@ -1,7 +1,8 @@
 [gd_scene format=3 uid="uid://b8nr1vd4mv203"]
 
 [ext_resource type="Script" uid="uid://cplbwj8agtfkr" path="res://enemies/mob.gd" id="1_mob"]
-[ext_resource type="Texture2D" uid="uid://ce6o71538cywk" path="res://cube32.png" id="2_6juje"]
+[ext_resource type="Texture2D" uid="uid://6k35vgpfwacd" path="res://sprites/bullet_blue.png" id="2_6juje"]
+[ext_resource type="PackedScene" uid="uid://5rwfmlf77lu1" path="res://effects/shadow.tscn" id="2_isfwi"]
 [ext_resource type="Script" uid="uid://c7w68xdn0asqh" path="res://components/range_attack.gd" id="2_mob"]
 [ext_resource type="PackedScene" uid="uid://b73q4bv6hdhkt" path="res://components/health_bar.tscn" id="3_mob"]
 
@@ -13,8 +14,9 @@ script = ExtResource("1_mob")
 move_speed = 60.0
 max_hp = 40
 
+[node name="Shadow" parent="." unique_id=2108032700 instance=ExtResource("2_isfwi")]
+
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=200000002]
-modulate = Color(0.8, 0.5, 0.1, 1)
 texture = ExtResource("2_6juje")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=200000003]

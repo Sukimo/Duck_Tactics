@@ -1,7 +1,7 @@
 extends Node
 class_name AttackComponent
 
-const CRIT_LABEL_SCENE := "res://effects/crit_label.tscn"
+const CRIT_LABEL_SCENE := preload( "res://effects/crit_label.tscn")
 
 @export var attack_range: float = 60.0
 @export var attack_damage: int = 10
@@ -10,12 +10,10 @@ const CRIT_LABEL_SCENE := "res://effects/crit_label.tscn"
 
 var _cooldown: float = 0.0
 var _owner_node: Node2D = null
-var _crit_label_scene : PackedScene = null
 
 func _ready() -> void:
 	_owner_node = get_parent() as Node2D
-	if ResourceLoader.exists(CRIT_LABEL_SCENE):
-		_crit_label_scene = load(CRIT_LABEL_SCENE)
+
 func _process(delta: float) -> void:
 	_cooldown -= delta
 
@@ -55,9 +53,7 @@ func deal_damage(target: Node2D, amount: int, is_crit: bool = false) -> void:
 		_spawn_crit_label(amount, target.global_position, true)
 
 func _spawn_crit_label(amount: int, world_pos: Vector2, is_crit: bool) -> void:
-	if _crit_label_scene == null:
-		return
-	var lbl: Node = _crit_label_scene.instantiate()
+	var lbl: Node = CRIT_LABEL_SCENE.instantiate()
 	get_tree().current_scene.add_child(lbl)
 	if lbl.has_method("init"):
 		lbl.call("init", amount, world_pos, is_crit)

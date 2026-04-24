@@ -1,20 +1,14 @@
 extends AttackComponent
 class_name RangeAttackComponent
 
-const PROJECTILE_SCENE := "res://projectile/Projectile.tscn"
+const PROJECTILE_SCENE := preload("res://projectile/Projectile.tscn")
 @export var projectile_speed: float = 300.0
 @export var arc_height: float = 80.0
 
-var _projectile_scene: PackedScene = null
-
 func _ready() -> void:
 	super._ready()
-	if ResourceLoader.exists(PROJECTILE_SCENE):
-		_projectile_scene = load(PROJECTILE_SCENE)
 
 func do_attack(target: Node2D) -> void:
-	if _projectile_scene == null:
-		return
 	var start := _owner_node.global_position
 	var t_pos := target.global_position
 	#prediction shoot pos
@@ -31,7 +25,7 @@ func do_attack(target: Node2D) -> void:
 	if is_crit:
 		print("[RangeAtk] CRIT! %d dmg (x%.1f)" % [final_damage, mult])
  
-	var proj = _projectile_scene.instantiate()
+	var proj = PROJECTILE_SCENE.instantiate()
 	get_tree().current_scene.add_child(proj)
 	
 	if proj.get("damage") != null:

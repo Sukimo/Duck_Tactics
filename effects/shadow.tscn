@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://5rwfmlf77lu1"]
+
+[ext_resource type="Texture2D" uid="uid://de11jnnsnmacv" path="res://sprites/shadow_128x48.png" id="1_17xec"]
+
+[node name="Shadow" type="Node2D" unique_id=2108032700]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1550012606]
+modulate = Color(0.08627451, 0, 0, 0.19607843)
+position = Vector2(0, 15)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("1_17xec")
