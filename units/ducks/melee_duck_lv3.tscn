@@ -11,6 +11,7 @@ size = Vector2(32, 32)
 [node name="MeleeDuck" type="CharacterBody2D" unique_id=811425380 groups=["ducks"]]
 script = ExtResource("1_h3cub")
 max_hp = 600
+duck_level = 3
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=727289044]
 texture_filter = 1
@@ -27,7 +28,6 @@ bump_distance = 20.0
 bump_speed = 550.0
 return_speed = 300.0
 flash_duration = 1.0
-attack_range = 40.0
 attack_damage = 130
 attack_speed = 1.1
 target_group = Array[String](["enemies", "structures"])

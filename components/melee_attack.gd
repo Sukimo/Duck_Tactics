@@ -64,8 +64,7 @@ func _on_contact() -> void:
 	_state = BumpState.RETURNING
 	# deal damage
 	if is_instance_valid(_pending_target):
-		if _pending_target.has_method("take_damage"):
-			_pending_target.take_damage(attack_damage)
+		duck_deal_damage(_pending_target,attack_damage)
 		_flash_pos = _pending_target.global_position
 		_flash_active = true
 		_flash_timer = flash_duration

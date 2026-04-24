@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://doqgjwikiyl0r"]
+
+[ext_resource type="Script" uid="uid://b0i8mc44y6i4h" path="res://units/matthew_duck.gd" id="1_matt"]
+[ext_resource type="Texture2D" uid="uid://buop3gdorari2" path="res://sprites/duck_range.png" id="2_matt"]
+[ext_resource type="Script" uid="uid://jdulj8s14g5x" path="res://units/matthew_range_attack.gd" id="3_jmehu"]
+[ext_resource type="PackedScene" uid="uid://b73q4bv6hdhkt" path="res://components/health_bar.tscn" id="4_matt"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_matt"]
+size = Vector2(32, 32)
+
+[node name="MatthewDuck" type="CharacterBody2D" unique_id=999000001 groups=["ducks"]]
+script = ExtResource("1_matt")
+max_hp = 180
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=999000002]
+modulate = Color(1, 0.88, 0.2, 1)
+texture = ExtResource("2_matt")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=999000003]
+shape = SubResource("RectangleShape2D_matt")
+
+[node name="NavAgent" type="NavigationAgent2D" parent="." unique_id=999000004]
+
+[node name="AttackComponent" type="Node" parent="." unique_id=999000005]
+script = ExtResource("3_jmehu")
+target_group = Array[String](["enemies"])
+
+[node name="HealthBar" parent="." unique_id=999000006 instance=ExtResource("4_matt")]

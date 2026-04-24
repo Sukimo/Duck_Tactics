@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://dvgbw0s1xoi4i"]
 
 [ext_resource type="Script" uid="uid://cplbwj8agtfkr" path="res://enemies/mob.gd" id="1_mob"]
-[ext_resource type="Script" uid="uid://dufoubqahcdi" path="res://components/melee_attack.gd" id="2_mob"]
 [ext_resource type="Texture2D" uid="uid://ce6o71538cywk" path="res://cube32.png" id="2_ucrmo"]
 [ext_resource type="PackedScene" uid="uid://b73q4bv6hdhkt" path="res://components/health_bar.tscn" id="3_mob"]
+[ext_resource type="Script" uid="uid://dawbwoa67ybhs" path="res://components/mob_melee_attack.gd" id="3_ucrmo"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mob"]
 size = Vector2(32, 32)
@@ -19,7 +19,7 @@ texture = ExtResource("2_ucrmo")
 shape = SubResource("RectangleShape2D_mob")
 
 [node name="AttackComponent" type="Node" parent="." unique_id=100000004]
-script = ExtResource("2_mob")
+script = ExtResource("3_ucrmo")
 attack_range = 40.0
 target_group = Array[String](["ducks"])
 

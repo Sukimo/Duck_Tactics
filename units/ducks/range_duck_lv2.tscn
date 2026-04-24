@@ -11,6 +11,7 @@ size = Vector2(32, 32)
 [node name="RangeDuck" type="CharacterBody2D" unique_id=811425380 groups=["ducks"]]
 script = ExtResource("1_wadj7")
 max_hp = 200
+duck_level = 2
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=727289044]
 texture = ExtResource("2_wadj7")

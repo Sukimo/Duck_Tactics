@@ -10,6 +10,10 @@ const CARD_SCENES   : Array[String] = [
 	"res://units/ducks/range_duck_lv2.tscn",
 ]
 
+const SPECIAL_OFFER_MATTHEW : String = "res://units/ducks/matthew_duck.tscn"
+const SPECIAL_OFFER_CRIT    : String = "__crit_upgrade__"  # pseudo-path, not a scene
+
+
 # Brown palette matching your mockup
 const COLOR_PANEL_BG    := Color(0.72, 0.46, 0.30)   # warm brown
 const COLOR_CARD_NORMAL := Color(0.55, 0.34, 0.20)   # darker brown card
@@ -172,7 +176,13 @@ func _confirm() -> void:
 	if scene == null:
 		push_warning("[RewardUI] Could not load: " + chosen_path)
 		return
-
+	
+	if chosen_path == SPECIAL_OFFER_CRIT:
+		GameState.global_duck_crit_rate += 0.05
+		print("[RewardUI] Team crit +5%%  → %.0f%%" % (GameState.global_duck_crit_rate * 100))
+		WaveManager.on_reward_confirmed()
+		return
+	
 	var duck : Node = scene.instantiate()
 	get_tree().current_scene.add_child(duck)
 	if duck is BaseDuck:
@@ -186,6 +196,7 @@ func _confirm() -> void:
 
 func _load_duck_texture(tex: TextureRect, scene_path: String) -> void:
 	# Try to grab the Sprite2D texture from the packed scene without instantiating fully
+	if scene_path == SPECIAL_OFFER_CRIT: return
 	if not ResourceLoader.exists(scene_path):
 		return
 	var packed := load(scene_path) as PackedScene
@@ -202,6 +213,8 @@ func _load_duck_texture(tex: TextureRect, scene_path: String) -> void:
 					return
 
 func _duck_display_name(scene_path: String) -> String:
+	if scene_path == SPECIAL_OFFER_CRIT:
+		return "Crit Rate +5%"
 	var file : String = scene_path.get_file().get_basename()
 	return file.replace("_", " ").capitalize()
 
@@ -213,10 +226,14 @@ func _on_state_changed(s: GameState.State) -> void:
 		_active = false
 
 func _open_reward() -> void:
-	# Build a random 3-card offer from CARD_SCENES pool
-	var pool := CARD_SCENES.duplicate()
-	pool.shuffle()
-	var offers : Array[String] = []
-	for i in min(3, pool.size()):
-		offers.append(pool[i])
+	var offers: Array[String] = []
+	if GameState.endless_mode and WaveManager.wave_index %3 ==0:
+		offers = [SPECIAL_OFFER_MATTHEW,SPECIAL_OFFER_CRIT,CARD_SCENES[randi()%CARD_SCENES.size()]]
+	else:
+		var pool := CARD_SCENES.duplicate()
+		pool.shuffle()
+		for i in min(3, pool.size()):
+			offers.append(pool[i])
+			
 	show_reward(offers)
+	

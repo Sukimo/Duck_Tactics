@@ -13,6 +13,9 @@ const ARENA_W : float =800.0
 const ARENA_H : float = 450.0
 const SPAWN_MARGIN : float = 8.0
 
+const  MATTHEW_SCENE: String = "res://units/ducks/matthew_duck.tscn"
+const  SPECIAL_REWARD_EVERY : int = 3 
+
 # Named spawn edge tags — assigned per mob entry in WAVE_DATA
 # "left"  → x = -SPAWN_MARGIN,  y = random in [60, ARENA_H-60]
 # "right" → x = ARENA_W+SPAWN_MARGIN, y = random in [60, ARENA_H-60]
@@ -245,6 +248,18 @@ func _on_wave_cleared() -> void:
 		return
 	
 	DuckRoster.clear_dead() # normal wave: clear dead as usual
+	
+	if not GameState.endless_mode and wave_index == STORY_WAVE_COUNT:
+		_gift_matthew()
+		_begin_reward()
+		return
+	
+	if GameState.endless_mode and wave_index % SPECIAL_REWARD_EVERY == 0:
+		GameState.change(GameState.State.REWARD)
+		emit_signal("wave_cleared")
+		# RewardUI will handle display; just flag special
+		return
+		
 	_begin_reward()
 	
 # ── Called by StoryEndUI "YES" button ─────────────────────────────────────
@@ -254,6 +269,16 @@ func enter_endless() -> void:
 	print("[WaveManager] Entering endless mode!")
 	GameState.change(GameState.State.SLIDE_TO_REST)
 	SignalBus.emit_signal("slide_to_rest")
+	
+func _gift_matthew()->void:
+	if not ResourceLoader.exists(MATTHEW_SCENE):
+		push_warning("[WaveManager] matthew_duck.tscn not found")
+		return
+	var duck : Node = (load(MATTHEW_SCENE) as PackedScene).instantiate()
+	get_tree().current_scene.add_child(duck)
+	if duck is BaseDuck:
+		DuckRoster.add(duck as BaseDuck)
+		print("[WaveManager] Matthew gifted to player!")
 
 # ── Timer callbacks ───────────────────────────────────────────────────────
 func _on_phase_timer_timeout() -> void:
