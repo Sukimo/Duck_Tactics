@@ -1,7 +1,8 @@
 [gd_scene format=3 uid="uid://doqgjwikiyl0r"]
 
 [ext_resource type="Script" uid="uid://b0i8mc44y6i4h" path="res://units/matthew_duck.gd" id="1_matt"]
-[ext_resource type="Texture2D" uid="uid://buop3gdorari2" path="res://sprites/duck_range.png" id="2_matt"]
+[ext_resource type="Texture2D" uid="uid://c6lnpsmi4871f" path="res://sprites/duck_matthew.png" id="2_jmehu"]
+[ext_resource type="PackedScene" uid="uid://5rwfmlf77lu1" path="res://effects/shadow.tscn" id="2_ll15q"]
 [ext_resource type="Script" uid="uid://jdulj8s14g5x" path="res://components/matthew_range_attack.gd" id="3_jmehu"]
 [ext_resource type="PackedScene" uid="uid://b73q4bv6hdhkt" path="res://components/health_bar.tscn" id="4_matt"]
 
@@ -12,9 +13,11 @@ size = Vector2(32, 32)
 script = ExtResource("1_matt")
 max_hp = 180
 
+[node name="Shadow" parent="." unique_id=2108032700 instance=ExtResource("2_ll15q")]
+
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=999000002]
-modulate = Color(1, 0.88, 0.2, 1)
-texture = ExtResource("2_matt")
+texture_filter = 1
+texture = ExtResource("2_jmehu")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=999000003]
 shape = SubResource("RectangleShape2D_matt")

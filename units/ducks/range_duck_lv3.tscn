@@ -1,7 +1,8 @@
 [gd_scene format=3 uid="uid://csjas8wxtkvbm"]
 
 [ext_resource type="Script" uid="uid://bqosdplvx2qo5" path="res://units/range_duck.gd" id="1_3tfy2"]
-[ext_resource type="Texture2D" uid="uid://buop3gdorari2" path="res://sprites/duck_range.png" id="2_f77gm"]
+[ext_resource type="Texture2D" uid="uid://vnynxenll2al" path="res://sprites/duck_range_t.png" id="2_3tfy2"]
+[ext_resource type="PackedScene" uid="uid://5rwfmlf77lu1" path="res://effects/shadow.tscn" id="2_f77gm"]
 [ext_resource type="Script" uid="uid://c7w68xdn0asqh" path="res://components/range_attack.gd" id="3_apcc8"]
 [ext_resource type="PackedScene" uid="uid://b73q4bv6hdhkt" path="res://components/health_bar.tscn" id="4_y85dp"]
 
@@ -13,8 +14,11 @@ script = ExtResource("1_3tfy2")
 max_hp = 450
 duck_level = 3
 
+[node name="Shadow" parent="." unique_id=2108032700 instance=ExtResource("2_f77gm")]
+
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=727289044]
-texture = ExtResource("2_f77gm")
+texture_filter = 1
+texture = ExtResource("2_3tfy2")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=472093862]
 shape = SubResource("RectangleShape2D_txoiq")

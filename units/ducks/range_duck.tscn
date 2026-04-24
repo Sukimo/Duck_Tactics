@@ -1,7 +1,8 @@
 [gd_scene format=3 uid="uid://dg6buts2tf6ws"]
 
 [ext_resource type="Script" uid="uid://bqosdplvx2qo5" path="res://units/range_duck.gd" id="1_8fxrk"]
-[ext_resource type="Texture2D" uid="uid://buop3gdorari2" path="res://sprites/duck_range.png" id="2_1xr37"]
+[ext_resource type="PackedScene" uid="uid://5rwfmlf77lu1" path="res://effects/shadow.tscn" id="2_3ow40"]
+[ext_resource type="Texture2D" uid="uid://vnynxenll2al" path="res://sprites/duck_range_t.png" id="3_27a8k"]
 [ext_resource type="Script" uid="uid://c7w68xdn0asqh" path="res://components/range_attack.gd" id="3_xd7ve"]
 [ext_resource type="PackedScene" uid="uid://b73q4bv6hdhkt" path="res://components/health_bar.tscn" id="4_kolxo"]
 
@@ -11,8 +12,11 @@ size = Vector2(32, 32)
 [node name="RangeDuck" type="CharacterBody2D" unique_id=811425380 groups=["ducks"]]
 script = ExtResource("1_8fxrk")
 
+[node name="Shadow" parent="." unique_id=2108032700 instance=ExtResource("2_3ow40")]
+
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=727289044]
-texture = ExtResource("2_1xr37")
+texture_filter = 1
+texture = ExtResource("3_27a8k")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=472093862]
 shape = SubResource("RectangleShape2D_txoiq")

@@ -9,6 +9,14 @@ class_name BaseDuck
 
 const HOLD_THRESHOLD: float =0.15 # seconds to distinguish click vs hold-drag
 
+ 
+# Level label visual constants
+const LV_OFFSET_Y  : float = -38.0   # above the health bar (-24) with a small gap
+const LV_FONT_SIZE : int   = 10
+const LV_COLOR     : Color = Color(1.0, 1.0, 0.3, 1.0)   # bright yellow
+const LV_COLOR_MAX : Color = Color(1.0, 0.4, 0.1, 1.0)   # orange-red at lv3+
+const LV_MAX       : int   = 3                             # level cap for color change
+
 var _mouse_held: bool =false
 var _hold_timer: float = 0.0
 var _is_dragging: bool = false
@@ -35,7 +43,22 @@ func _ready() -> void:
 func _draw() -> void:
 	if attack_component and attack_component.has_method("draw_debug"):
 		attack_component.draw_debug(self)
+	_draw_level_label()
 
+func _draw_level_label() -> void:
+	var lv_text : String = "Lv" + str(duck_level)
+	var col     : Color  = LV_COLOR_MAX if duck_level >= LV_MAX else LV_COLOR
+	var font    : Font   = ThemeDB.fallback_font
+	var pos     : Vector2 = Vector2(
+		-ThemeDB.fallback_font.get_string_size(lv_text, HORIZONTAL_ALIGNMENT_LEFT, -1, LV_FONT_SIZE).x * 0.5,
+		LV_OFFSET_Y
+	)
+	# Tiny dark shadow for readability on any background
+	draw_string(font, pos + Vector2(1, 1), lv_text,
+		HORIZONTAL_ALIGNMENT_LEFT, -1, LV_FONT_SIZE, Color(0, 0, 0, 0.7))
+	draw_string(font, pos, lv_text,
+		HORIZONTAL_ALIGNMENT_LEFT, -1, LV_FONT_SIZE, col)
+		
 # input
 func _input(event: InputEvent) -> void:
 	#drag pick-up

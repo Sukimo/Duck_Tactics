@@ -1,7 +1,8 @@
 [gd_scene format=3 uid="uid://cvi0q3w70idj7"]
 
 [ext_resource type="Script" uid="uid://ctvlk57sns1bt" path="res://units/melee_duck.gd" id="1_2whgl"]
-[ext_resource type="Texture2D" uid="uid://dp8kctvok25q5" path="res://sprites/duck_pixel.png" id="2_2whgl"]
+[ext_resource type="Texture2D" uid="uid://b6jc45f1snk7v" path="res://sprites/duck_t.png" id="2_2whgl"]
+[ext_resource type="PackedScene" uid="uid://5rwfmlf77lu1" path="res://effects/shadow.tscn" id="2_75gud"]
 [ext_resource type="Script" uid="uid://dufoubqahcdi" path="res://components/melee_attack.gd" id="3_i5qc3"]
 [ext_resource type="PackedScene" uid="uid://b73q4bv6hdhkt" path="res://components/health_bar.tscn" id="4_1fcf5"]
 
@@ -12,6 +13,8 @@ size = Vector2(32, 32)
 script = ExtResource("1_2whgl")
 max_hp = 250
 duck_level = 2
+
+[node name="Shadow" parent="." unique_id=2108032700 instance=ExtResource("2_75gud")]
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=727289044]
 texture_filter = 1
