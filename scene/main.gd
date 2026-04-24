@@ -2,12 +2,14 @@
 extends Node2D
 
 @onready var hud_label : Label = $CanvasLayer/HUD/Label
-
 @onready var camera: Camera2D = $Camera2D
 @onready var arena_zone: Node2D = $Arena2D
 @onready var rest_zone: Node2D = $RestZone
+@onready var music_rest  : AudioStreamPlayer = $MusicRest
+@onready var music_battle: AudioStreamPlayer = $MusicBattle
 
 const SLIDE_DURATION : float = 0.6
+
 func _ready() -> void:
 	camera.global_position.x = 0.0
 	WaveManager.wave_started.connect(_on_wave_started)
@@ -23,21 +25,27 @@ func _ready() -> void:
 	
 	WaveManager.start_game()
 
+func _play_music(track: AudioStreamPlayer) -> void:
+	if track.playing:
+		return          # already playing this track — don't restart
+	music_rest.stop()
+	music_battle.stop()
+	track.play()
+
 #state reactions
 func _on_state_changed(s: GameState.State)->void:
 	match s:
-		GameState.State.REST:
-			pass  #hud_label.text = "Rest — prepare your ducks!"
-		GameState.State.PREP:
-			pass   #hud_label.text = "Place your ducks! (15s)"
+		GameState.State.REST, GameState.State.PREP, \
+		GameState.State.REWARD, GameState.State.SLIDE_TO_REST,\
+		GameState.State.SLIDE_TO_ARENA:
+			hud_label.text = "Global duck crit rate: %.1f%%" % GameState.global_duck_crit_rate
+			_play_music(music_rest)
 		GameState.State.BATTLE:
-			pass   # wave_started signal handles label
-		GameState.State.REWARD:
-			pass   #hud_label.text = "Wave cleared! Reward incoming..."
-		GameState.State.WIN:
-			pass   #hud_label.text = "YOU WIN — all waves cleared!"
-		GameState.State.GAME_OVER:
-			pass   #hud_label.text = "GAME OVER"
+			_play_music(music_battle)
+		GameState.State.GAME_OVER, GameState.State.WIN, \
+		GameState.State.STORY_END:
+			music_rest.stop()
+			music_battle.stop()
 
 func _on_wave_started(n: int) -> void:
 	hud_label.text = "Wave %d" % n

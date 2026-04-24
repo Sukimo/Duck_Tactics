@@ -2,7 +2,7 @@ extends Control
 # Attach to a CanvasLayer node called "PrepUI"
 
 const MAX_SLOT:int= 8
-const SLOT_SCENE:= "res://canvas/slot.tscn"
+const SLOT_SCENE:= preload("res://canvas/slot.tscn")
 
 var slot_ducks: Array= []
 var _slot_panels: Array= []
@@ -12,20 +12,13 @@ var _selected_slot: int =-1
 
 @onready var slot_bar : HBoxContainer =$SlotBar
 
-var slot_scene: PackedScene = null
-
 func _ready() -> void:
-	if ResourceLoader.exists(SLOT_SCENE):
-		slot_scene  =load(SLOT_SCENE)
-	else:
-		push_warning("[PrepUI] Slot scene not found at: " + SLOT_SCENE)
-	
 	slot_ducks.resize(MAX_SLOT)
 	slot_ducks.fill(null)
 	
 	#build slot panels dynamically
 	for i in MAX_SLOT:
-		var panel : Panel =slot_scene.instantiate() if slot_scene else Panel.new()
+		var panel : Panel =SLOT_SCENE.instantiate()
 		#bind index correctly for each slot
 		panel.gui_input.connect(func(event): _on_slot_input(event,i))
 		slot_bar.add_child(panel)

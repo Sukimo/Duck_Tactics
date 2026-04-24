@@ -38,6 +38,9 @@ func _process(delta: float) -> void:
 
 func _on_state_changed(s: GameState.State)->void:
 	control.visible = (s == GameState.State.PREP)
+	if s != GameState.State.PREP:
+		_active_edges = []
+	queue_redraw() 
 
 # ── Draw spawn-edge warning arrows ───────────────────────────────────────────
 func _draw() -> void:

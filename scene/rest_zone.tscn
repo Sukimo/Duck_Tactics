@@ -192,6 +192,22 @@ offset_right = 559.0
 offset_bottom = 395.0
 color = Color(1, 1, 1, 0.12)
 
+[node name="VBoxContainer" type="VBoxContainer" parent="Control" unique_id=999352586]
+layout_mode = 0
+offset_left = 35.0
+offset_top = 379.0
+offset_right = 376.0
+offset_bottom = 455.0
+
+[node name="Label" type="Label" parent="Control/VBoxContainer" unique_id=804699468]
+layout_mode = 2
+text = "Refresh Music \"Fluffing a Duck\" Kevin MacLeod "
+
+[node name="Label2" type="Label" parent="Control/VBoxContainer" unique_id=1179694871]
+layout_mode = 2
+text = "Battle Music \" Wacky Waiting \" Kenny Game Assets
+"
+
 [connection signal="body_entered" from="HealZone" to="." method="_on_heal_zone_body_entered"]
 [connection signal="body_exited" from="HealZone" to="." method="_on_heal_zone_body_exited"]
 [connection signal="body_entered" from="BattleZone" to="." method="_on_battle_zone_body_entered"]

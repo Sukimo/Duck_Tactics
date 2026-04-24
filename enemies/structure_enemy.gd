@@ -13,14 +13,13 @@ extends StaticBody2D
 @export var windup_color:Color = Color(1,0.6,0,0.55) #orange
 
 #get projcetile pack scene (prefab) 
-const PROJECTILE_SCENE := "res://projectile/Projectile.tscn"
+const PROJECTILE_SCENE := preload("res://projectile/Projectile.tscn")
 
 #node refs
 @onready var attack_timer: Timer = $AttackTimer
 @onready var spawn_pooint: Node2D = $ProjectileSpawn
 
 #state
-var _projectile_scene: PackedScene =null
 var _current_target: Node2D =null
 
 #Windup state
@@ -30,12 +29,6 @@ var _windup_pos: Vector2 =Vector2.ZERO # predicted land pos in world space
 var _windup_target: Node2D =null
 
 func _ready() -> void:
-	#load projectile scene
-	if ResourceLoader.exists(PROJECTILE_SCENE):
-		_projectile_scene  =load(PROJECTILE_SCENE)
-	else:
-		push_warning("[StructureEnemy] Projectile scene not found at: " + PROJECTILE_SCENE)
-	
 	attack_timer.wait_time = attack_delay
 	attack_timer.one_shot = false
 	attack_timer.timeout.connect(_on_attack_timer_timeout)
@@ -111,14 +104,10 @@ func _begin_windup(target: Node2D)->void:
 
 #fire: called after windup completes
 func _fire_projectile(target:Node2D, land_pos: Vector2)->void:
-	if _projectile_scene == null:
-		push_warning("[StructureEnemy] Cannot fire — projectile scene missing.")
-		return
-	
 	if not is_instance_valid(target):
 		return #duck died during windup
 	 
-	var proj:Node = _projectile_scene.instantiate()
+	var proj:Node = PROJECTILE_SCENE.instantiate()
 	get_tree().current_scene.add_child(proj)
 	
 	if proj.get("damage") != null:
@@ -145,10 +134,6 @@ func _find_nearest_duck()->Node2D:
 	return best
 
 func _fire_at(target:Node2D)->void:
-	if _projectile_scene == null:
-		push_warning("[StructureEnemy] Cannot fire — projectile scene missing.")
-		return
-	
 	# Predict where the duck will be when the projectile lands
 	var start: Vector2 = spawn_pooint.global_position
 	var duck_pos:Vector2 = (target as Node2D).global_position
@@ -165,7 +150,7 @@ func _fire_at(target:Node2D)->void:
 	
 	var predicted_pos: Vector2 = duck_pos + duck_vel*travel_time
 	
-	var proj:Node = _projectile_scene.instantiate()
+	var proj:Node = PROJECTILE_SCENE.instantiate()
 	get_tree().current_scene.add_child(proj)
 	
 	if proj.has_method("init"):

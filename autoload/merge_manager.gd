@@ -4,12 +4,12 @@ extends Node
 # Maps (class_name_string, level) → PackedScene path
 # Extend this table as you add more duck types/levels
 const MERGE_TABLE: Dictionary ={
-	["MeleeDuck",1]:"res://units/ducks/melee_duck.tscn",
-	["MeleeDuck", 2]: "res://units/ducks/melee_duck_lv2.tscn",
-	["MeleeDuck", 3]: "res://units/ducks/melee_duck_lv3.tscn",
-	["RangeDuck", 1]: "res://units/ducks/range_duck.tscn",
-	["RangeDuck", 2]: "res://units/ducks/range_duck_lv2.tscn",
-	["RangeDuck", 3]: "res://units/ducks/range_duck_lv3.tscn",
+	["MeleeDuck",1]: preload("res://units/ducks/melee_duck.tscn"),
+	["MeleeDuck", 2]: preload("res://units/ducks/melee_duck_lv2.tscn"),
+	["MeleeDuck", 3]: preload("res://units/ducks/melee_duck_lv3.tscn"),
+	["RangeDuck", 1]: preload("res://units/ducks/range_duck.tscn"),
+	["RangeDuck", 2]: preload("res://units/ducks/range_duck_lv2.tscn"),
+	["RangeDuck", 3]: preload("res://units/ducks/range_duck_lv3.tscn"),
 }
 
 func try_merge(a: BaseDuck, b: BaseDuck)-> void:
@@ -35,8 +35,7 @@ func try_merge(a: BaseDuck, b: BaseDuck)-> void:
 	DuckRoster.remove(b)
 	
 	# spawn merged duck
-	var scene: PackedScene = load(MERGE_TABLE[key])
-	var merged: Node = scene.instantiate()
+	var merged: Node = MERGE_TABLE[key].instantiate()
 	
 	var m := merged as BaseDuck
 	if m:
