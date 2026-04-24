@@ -1,0 +1,56 @@
+[gd_scene format=3 uid="uid://d0pcprq85rcxs"]
+
+[ext_resource type="Script" uid="uid://b243qmnjlsg2r" path="res://canvas/story_end_ui.gd" id="1_30not"]
+
+[node name="StoryEndUI" type="Control" unique_id=131595864]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_30not")
+
+[node name="Overlay" type="ColorRect" parent="." unique_id=297756602]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+color = Color(0, 0, 0, 0.7058824)
+
+[node name="Panel" type="Panel" parent="." unique_id=880944574]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="Panel" unique_id=615420555]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TitleLabel" type="Label" parent="Panel/VBox" unique_id=1712378150]
+layout_mode = 2
+text = "\"The grape is next storll... \""
+
+[node name="BodyLabel" type="Label" parent="Panel/VBox" unique_id=1043034897]
+layout_mode = 2
+text = "\"Will you continue?\""
+
+[node name="HBox" type="HBoxContainer" parent="Panel/VBox" unique_id=1879103392]
+layout_mode = 2
+
+[node name="YesButton" type="Button" parent="Panel/VBox/HBox" unique_id=829424346]
+layout_mode = 2
+text = "Yes"
+
+[node name="NoButton" type="Button" parent="Panel/VBox/HBox" unique_id=1324695655]
+layout_mode = 2
+text = "NO"
+
+[connection signal="pressed" from="Panel/VBox/HBox/YesButton" to="." method="_on_yes_pressed"]
+[connection signal="pressed" from="Panel/VBox/HBox/NoButton" to="." method="_on_no_button_pressed"]

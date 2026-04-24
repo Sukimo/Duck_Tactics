@@ -21,7 +21,7 @@ func try_merge(a: BaseDuck, b: BaseDuck)-> void:
 		return
 	
 	var next_level: int= a.duck_level +1
-	var key := [a.duck_type(),next_level]
+	var key := [str(a.duck_type()),next_level]
 	
 	if not MERGE_TABLE.has(key):
 		print("[Merge] No recipe for %s lv%d" % [a.duck_type(), next_level])
@@ -37,13 +37,15 @@ func try_merge(a: BaseDuck, b: BaseDuck)-> void:
 	# spawn merged duck
 	var scene: PackedScene = load(MERGE_TABLE[key])
 	var merged: Node = scene.instantiate()
+	
+	var m := merged as BaseDuck
+	if m:
+		m.global_position =spawn_pos
+		m.duck_level = next_level
+	
 	get_tree().current_scene.add_child(merged)
 	
-	if merged is BaseDuck:
-		var m:= merged as BaseDuck
-		m.global_position =spawn_pos
-		m.duck_level =next_level
-	
+	if m:
 		DuckRoster.add(m)
 		if b.roster_status == DuckRoster.Status.DEPLOYED:
 			DuckRoster.deploy(m,spawn_pos)

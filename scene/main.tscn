@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://delclna7dru0q" path="res://scene/prepare_ui.gd" id="4_brvut"]
 [ext_resource type="PackedScene" uid="uid://br4vn0r83colk" path="res://canvas/reward_ui.tscn" id="5_0ha60"]
 [ext_resource type="PackedScene" uid="uid://ca5jchkl0qm0l" path="res://canvas/game_over_ui.tscn" id="6_4j5ol"]
+[ext_resource type="PackedScene" uid="uid://d0pcprq85rcxs" path="res://canvas/story_end_ui.tscn" id="7_p1hux"]
 
 [node name="Node2D" type="Node2D" unique_id=286947507]
 script = ExtResource("1_itxqv")
@@ -52,3 +53,5 @@ grow_vertical = 0
 [node name="RewardUI" parent="CanvasLayer" unique_id=100200300 instance=ExtResource("5_0ha60")]
 
 [node name="GameOverUI" parent="CanvasLayer" unique_id=471014817 instance=ExtResource("6_4j5ol")]
+
+[node name="StoryEndUI" parent="CanvasLayer" unique_id=131595864 instance=ExtResource("7_p1hux")]

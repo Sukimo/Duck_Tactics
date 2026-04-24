@@ -24,6 +24,13 @@ func do_attack(target: Node2D) -> void:
 		vel = target.velocity
 	var predicted := t_pos + vel * travel
 
+	# ── Crit roll using GameState globals ────────────────────────────────────
+	var is_crit: bool = randf() < GameState.global_duck_crit_rate
+	var mult: float = _get_crit_mult()
+	var final_damage: int = int(attack_damage * mult) if is_crit else attack_damage
+	if is_crit:
+		print("[RangeAtk] CRIT! %d dmg (x%.1f)" % [final_damage, mult])
+ 
 	var proj = _projectile_scene.instantiate()
 	get_tree().current_scene.add_child(proj)
 	
@@ -36,3 +43,7 @@ func do_attack(target: Node2D) -> void:
 		
 	if proj.has_method("init"):
 		proj.call("init", target, start, predicted)
+
+# Override in subclass (MatthewRangeAttack) to return matthew_crit_mult
+func _get_crit_mult() -> float:
+	return GameState.global_duck_crit_mult

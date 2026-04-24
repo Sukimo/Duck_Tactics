@@ -11,7 +11,6 @@ var _owner_node: Node2D = null
 
 func _ready() -> void:
 	_owner_node = get_parent() as Node2D
-
 func _process(delta: float) -> void:
 	_cooldown -= delta
 
@@ -25,10 +24,30 @@ func try_attack(target: Node2D = null) -> void:
 	if dist <= attack_range:
 		do_attack(t)
 		_cooldown = 1.0 / attack_speed
-
+ 
 # Override in children
 func do_attack(target: Node2D) -> void:
 	pass
+
+# ── Duck attack: roll crit from GameState, then call deal_damage ──────────────
+# Call this from duck attack components (melee / range)
+func duck_deal_damage(target: Node2D, base_amount: int, crit_mult_override: float = -1.0) -> void:
+	var crit_rate: float = GameState.global_duck_crit_rate
+	var crit_mult: float = crit_mult_override if crit_mult_override > 0.0 \
+							else GameState.global_duck_crit_mult
+	var is_crit: bool = randf() < crit_rate
+	var final_amount: int = int(base_amount * crit_mult) if is_crit else base_amount
+	deal_damage(target, final_amount, is_crit)
+	
+# ── Standard damage delivery (used by both duck and mob paths) ────────────────
+# Mobs call this directly with is_crit = false
+func deal_damage(target: Node2D, amount: int, is_crit: bool = false) -> void:
+	if not is_instance_valid(target):
+		return
+	if target.has_method("take_damage"):
+		target.take_damage(amount)
+	if is_crit:
+		print("[AttackComponent] CRIT %d on %s" % [amount, target.name])
 
 func _find_nearest() -> Node2D:
 	var best: Node2D = null

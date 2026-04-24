@@ -4,23 +4,42 @@ extends Node
 signal wave_started(wave_number: int)
 signal wave_cleared
 signal all_waves_cleared
+signal spawn_edges_ready(edges: Array) #vector2
 
 const PREP_TIME   : float = 15.0
 const REWARD_TIME : float = 4.0
 
+const ARENA_W : float =800.0
+const ARENA_H : float = 450.0
+const SPAWN_MARGIN : float = 8.0
+
+# Named spawn edge tags — assigned per mob entry in WAVE_DATA
+# "left"  → x = -SPAWN_MARGIN,  y = random in [60, ARENA_H-60]
+# "right" → x = ARENA_W+SPAWN_MARGIN, y = random in [60, ARENA_H-60]
+# "top"   → x = random in [60, ARENA_W-60], y = -SPAWN_MARGIN
+
 const WAVE_DATA : Array = [
 	{ "enemies": [
-		{ "scene": "res://enemies/mob/melee_mob.tscn", "count": 3, "interval": 1.2 }
+		{ "scene": "res://enemies/mob/melee_mob.tscn", "count": 3, "interval": 1.2, "edge": "left" }
 	]},
 	{ "enemies": [
-		{ "scene": "res://enemies/mob/melee_mob.tscn", "count": 3, "interval": 1.0 },
-		{ "scene": "res://enemies/mob/range_mob.tscn",  "count": 2, "interval": 1.5 }
+		{ "scene": "res://enemies/mob/melee_mob.tscn", "count": 3, "interval": 1.0, "edge": "left"  },
+		{ "scene": "res://enemies/mob/range_mob.tscn",  "count": 2, "interval": 1.5, "edge": "right" }
 	]},
 	{ "enemies": [
-		{ "scene": "res://enemies/mob/melee_mob.tscn", "count": 5, "interval": 0.8 },
-		{ "scene": "res://enemies/mob/range_mob.tscn",  "count": 3, "interval": 1.2 }
+		{ "scene": "res://enemies/mob/melee_mob.tscn", "count": 5, "interval": 0.8, "edge": "left"  },
+		{ "scene": "res://enemies/mob/range_mob.tscn",  "count": 3, "interval": 1.2, "edge": "top"  }
 	]},
 ]
+
+const STORY_WAVE_COUNT: int =3
+
+const  ENDLESS_BASE : Dictionary ={
+	"enemies": [
+		{ "scene": "res://enemies/mob/melee_mob.tscn", "count": 4, "interval": 0.8, "edge": "left"  },
+		{ "scene": "res://enemies/mob/range_mob.tscn",  "count": 3, "interval": 1.0, "edge": "right" }
+	]
+}
 
 const STARTER_DUCKS : Array = [
 	"res://units/ducks/melee_duck.tscn",
@@ -29,12 +48,16 @@ const STARTER_DUCKS : Array = [
 ] 
 
 var wave_index   : int   = 0
+var _endless_loop : int = 0
 var _timer       : Timer
 var _spawn_queue : Array = []
 var _spawn_timer : Timer
 
+var _active_edges : Array =[] #string
+
 func start_game() -> void:
 	wave_index = 0
+	_endless_loop = 0
 	_spawn_starter_duck()
 	GameState.change(GameState.State.SLIDE_TO_ARENA)
 	_begin_prep()
@@ -88,16 +111,46 @@ func _begin_prep() -> void:
 func _begin_reward() -> void:
 	GameState.change(GameState.State.REWARD)
 	emit_signal("wave_cleared")
-	_give_reward()
-
+	
 # ── Spawn ─────────────────────────────────────────────────────────────────
+func _collect_active_edges()->void:
+	_active_edges.clear()
+	var data :Dictionary = _get_wave_data()
+	for entry in data["enemies"]:
+		var edge : String = entry.get("edge","left")
+		if not _active_edges.has(edge):
+			_active_edges.append(edge)
+
+func _get_wave_data()->Dictionary:
+	if GameState.endless_mode:
+		return _scale_endless()
+	return WAVE_DATA[wave_index]
+	
 func _build_spawn_queue() -> void:
 	_spawn_queue.clear()
-	var data : Dictionary = WAVE_DATA[wave_index]
+	var data : Dictionary = _get_wave_data()
 	for entry in data["enemies"]:
-		for i in entry["count"]:
-			_spawn_queue.append({ "scene": entry["scene"], "delay": entry["interval"] })
+		var edge : String = entry.get("edge", "left")
+		for _i in entry["count"]:
+			_spawn_queue.append({
+				"scene": entry["scene"],
+				"delay": entry["interval"],
+				"edge":  edge
+			})
 
+func _scale_endless()->Dictionary:
+	var loop := _endless_loop
+	_endless_loop += 1
+	var melee_count : int   = 4 + loop * 2
+	var range_count : int   = 3 + loop
+	var interval    : float = max(0.4, 0.8 - loop * 0.05)
+	return {
+		"enemies": [
+			{ "scene": "res://enemies/mob/melee_mob.tscn", "count": melee_count, "interval": interval,       "edge": "left"  },
+			{ "scene": "res://enemies/mob/range_mob.tscn",  "count": range_count, "interval": interval + 0.2, "edge": "right" }
+		]
+	}
+	
 func _kick_spawn_timer() -> void:
 	if _spawn_queue.is_empty():
 		return
@@ -109,35 +162,43 @@ func _on_spawn_tick() -> void:
 	if _spawn_queue.is_empty():
 		return
 	var entry = _spawn_queue.pop_front()
-	_do_spawn(entry["scene"])
+	_do_spawn(entry["scene"], entry["edge"])
 	if not _spawn_queue.is_empty():
 		_kick_spawn_timer()
 
-func _do_spawn(scene_path: String) -> void:
+func _do_spawn(scene_path: String, edge: String) -> void:
 	if not ResourceLoader.exists(scene_path):
 		push_warning("[Wave] scene not found: " + scene_path)
 		return
 	var mob : Node = (load(scene_path) as PackedScene).instantiate()
 	get_tree().current_scene.add_child(mob)
 	if mob is Node2D:
-		(mob as Node2D).global_position = Vector2(
-			randf_range(50, 150),
-			randf_range(80, 370)
-		)
+		(mob as Node2D).global_position = _edge_spawn_pos(edge)
+ 
+# Returns a random world position along the requested arena edge
+func _edge_spawn_pos(edge: String) -> Vector2:
+	match edge:
+		"left":
+			return Vector2(-SPAWN_MARGIN, randf_range(60.0, ARENA_H - 60.0))
+		"right":
+			return Vector2(ARENA_W + SPAWN_MARGIN, randf_range(60.0, ARENA_H - 60.0))
+		"top":
+			return Vector2(randf_range(60.0, ARENA_W - 60.0), -SPAWN_MARGIN)
+		_:  # fallback
+			return Vector2(-SPAWN_MARGIN, randf_range(60.0, ARENA_H - 60.0))
 
+# duck wipe (lose)
 func _check_enemies_dead() -> void:
 	if not GameState.is_state(GameState.State.BATTLE):
 		return
 		
-	var alive_duck := DuckRoster.count_deployed()
-	var duck_in_storage := DuckRoster.count_resting()
-	
-	if alive_duck == 0:
+	if DuckRoster.count_deployed() == 0:
 		_on_all_duck_dead()
 		return
 		
 	if not _spawn_queue.is_empty():
 		return
+	
 	var alive := 0
 	for e in get_tree().get_nodes_in_group("enemies"):
 		if e is CharacterBody2D:
@@ -148,24 +209,22 @@ func _check_enemies_dead() -> void:
 func _on_all_duck_dead()-> void:
 	if not GameState.is_state(GameState.State.BATTLE):
 		return
-		
-	GameState.lives -=1
-	print("[WaveManager] Duck wipe! Lives left: %d" % GameState.lives)
-	
 	_spawn_queue.clear()
 	for e in get_tree().get_nodes_in_group("enemies"):
 		if is_instance_valid(e):
 			e.queue_free()
+			
+	GameState.lives -=1
+	print("[WaveManager] Duck wipe! Lives left: %d" % GameState.lives)
+	DuckRoster.recall_all()
+	DuckRoster.clear_dead()
 	
 	if GameState.lives <= 0:
 		GameState.change(GameState.State.GAME_OVER)
 	else: 
-		DuckRoster.recall_all()
-		DuckRoster.clear_dead()
-		SignalBus.emit_signal("slide_to_rest")
 		GameState.change(GameState.State.SLIDE_TO_REST)
-		
-		
+		SignalBus.emit_signal("slide_to_rest")
+	
 func _on_wave_cleared() -> void:
 	if not GameState.is_state(GameState.State.BATTLE):
 		return
@@ -177,15 +236,24 @@ func _on_wave_cleared() -> void:
 	
 	# Recall + dead cleanup
 	DuckRoster.recall_all()   # deployed → resting
-	DuckRoster.clear_dead()   # free dead nodes
-	
 	wave_index += 1
-	if wave_index >= WAVE_DATA.size():
-		#wave_index = 0
-		GameState.change(GameState.State.WIN)
+	
+	#Story completed show end screen
+	if not GameState.endless_mode and wave_index >= STORY_WAVE_COUNT:
+		GameState.change(GameState.State.STORY_END)
 		emit_signal("all_waves_cleared")
 		return
+	
+	DuckRoster.clear_dead() # normal wave: clear dead as usual
 	_begin_reward()
+	
+# ── Called by StoryEndUI "YES" button ─────────────────────────────────────
+func enter_endless() -> void:
+	GameState.endless_mode = true
+	_endless_loop = 0
+	print("[WaveManager] Entering endless mode!")
+	GameState.change(GameState.State.SLIDE_TO_REST)
+	SignalBus.emit_signal("slide_to_rest")
 
 # ── Timer callbacks ───────────────────────────────────────────────────────
 func _on_phase_timer_timeout() -> void:
