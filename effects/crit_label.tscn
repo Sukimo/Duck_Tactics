@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://cfdanwbtxne72"]
+
+[ext_resource type="Script" uid="uid://c83ffc1mmv47n" path="res://effects/crit_label.gd" id="1_ahvwn"]
+
+[node name="CritLabel" type="Node2D" unique_id=888000001]
+z_index = 20
+script = ExtResource("1_ahvwn")

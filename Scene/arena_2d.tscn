@@ -1,8 +1,6 @@
 [gd_scene format=3 uid="uid://4y65ctapxa7c"]
 
-[ext_resource type="Texture2D" uid="uid://ce6o71538cywk" path="res://cube32.png" id="1_4ecip"]
 [ext_resource type="Script" uid="uid://cjmhdf54xpda" path="res://scene/arena_zone.gd" id="1_bj6xp"]
-[ext_resource type="PackedScene" uid="uid://doqgjwikiyl0r" path="res://units/ducks/matthew_duck.tscn" id="3_bj6xp"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_4ecip"]
 vertices = PackedVector2Array(778.9531, 17.929688, 777.0469, 426, 20.84375, 426, 14.15625, 13.0625)
@@ -19,39 +17,6 @@ color = Color(0.65882355, 0.9019608, 0.11372549, 1)
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="." unique_id=1392470367]
 navigation_polygon = SubResource("NavigationPolygon_4ecip")
-
-[node name="Duck2D" type="Sprite2D" parent="." unique_id=1576329683]
-position = Vector2(191, 177)
-texture = ExtResource("1_4ecip")
-
-[node name="ColorRect" type="ColorRect" parent="Duck2D" unique_id=679138927]
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -48.0
-offset_top = -16.0
-grow_horizontal = 2
-grow_vertical = 0
-color = Color(0.3529412, 0.41960785, 0.078431375, 0.5882353)
-
-[node name="Duck2D4" type="Sprite2D" parent="." unique_id=352887246]
-position = Vector2(577, 171)
-texture = ExtResource("1_4ecip")
-
-[node name="ColorRect" type="ColorRect" parent="Duck2D4" unique_id=1948379875]
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -29.0
-offset_top = -16.0
-offset_right = 19.0
-grow_horizontal = 2
-grow_vertical = 0
-color = Color(0.3529412, 0.41960785, 0.078431375, 0.5882353)
 
 [node name="Control" type="Control" parent="." unique_id=1844710980]
 layout_mode = 3
@@ -76,6 +41,3 @@ offset_bottom = 448.0
 theme_override_font_sizes/font_size = 100
 text = "15s"
 horizontal_alignment = 2
-
-[node name="MatthewDuck" parent="." unique_id=999000001 instance=ExtResource("3_bj6xp")]
-position = Vector2(363, 297)

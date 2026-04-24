@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b0i8mc44y6i4h" path="res://units/matthew_duck.gd" id="1_matt"]
 [ext_resource type="Texture2D" uid="uid://buop3gdorari2" path="res://sprites/duck_range.png" id="2_matt"]
-[ext_resource type="Script" uid="uid://jdulj8s14g5x" path="res://units/matthew_range_attack.gd" id="3_jmehu"]
+[ext_resource type="Script" uid="uid://jdulj8s14g5x" path="res://components/matthew_range_attack.gd" id="3_jmehu"]
 [ext_resource type="PackedScene" uid="uid://b73q4bv6hdhkt" path="res://components/health_bar.tscn" id="4_matt"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_matt"]

@@ -240,20 +240,15 @@ func _on_wave_cleared() -> void:
 	# Recall + dead cleanup
 	DuckRoster.recall_all()   # deployed → resting
 	wave_index += 1
+	DuckRoster.clear_dead() # normal wave: clear dead as usual
 	
 	#Story completed show end screen
 	if not GameState.endless_mode and wave_index >= STORY_WAVE_COUNT:
+		_gift_matthew()
 		GameState.change(GameState.State.STORY_END)
 		emit_signal("all_waves_cleared")
 		return
-	
-	DuckRoster.clear_dead() # normal wave: clear dead as usual
-	
-	if not GameState.endless_mode and wave_index == STORY_WAVE_COUNT:
-		_gift_matthew()
-		_begin_reward()
-		return
-	
+		
 	if GameState.endless_mode and wave_index % SPECIAL_REWARD_EVERY == 0:
 		GameState.change(GameState.State.REWARD)
 		emit_signal("wave_cleared")

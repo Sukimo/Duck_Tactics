@@ -12,7 +12,7 @@ const CARD_SCENES   : Array[String] = [
 
 const SPECIAL_OFFER_MATTHEW : String = "res://units/ducks/matthew_duck.tscn"
 const SPECIAL_OFFER_CRIT    : String = "__crit_upgrade__"  # pseudo-path, not a scene
-
+const SPECIAL_OFFER_HEAL : String = "__heal_all__"
 
 # Brown palette matching your mockup
 const COLOR_PANEL_BG    := Color(0.72, 0.46, 0.30)   # warm brown
@@ -172,17 +172,27 @@ func _confirm() -> void:
 	visible = false
 
 	var chosen_path : String = _offers[_chosen]
-	var scene := load(chosen_path) as PackedScene
-	if scene == null:
-		push_warning("[RewardUI] Could not load: " + chosen_path)
-		return
-	
 	if chosen_path == SPECIAL_OFFER_CRIT:
 		GameState.global_duck_crit_rate += 0.05
 		print("[RewardUI] Team crit +5%%  → %.0f%%" % (GameState.global_duck_crit_rate * 100))
 		WaveManager.on_reward_confirmed()
 		return
 	
+	if chosen_path == SPECIAL_OFFER_HEAL:
+		for duck in DuckRoster.get_all():
+			if is_instance_valid(duck):
+				duck.hp = duck.max_hp
+				if duck.has_node("HealthBar"):
+					duck.get_node("HealthBar").update(duck.hp, duck.max_hp)
+		print("[RewardUI] All ducks healed to full!")
+		WaveManager.on_reward_confirmed()
+		return
+	
+	var scene := load(chosen_path) as PackedScene
+	if scene == null:
+		push_warning("[RewardUI] Could not load: " + chosen_path)
+		return
+		
 	var duck : Node = scene.instantiate()
 	get_tree().current_scene.add_child(duck)
 	if duck is BaseDuck:
@@ -197,6 +207,7 @@ func _confirm() -> void:
 func _load_duck_texture(tex: TextureRect, scene_path: String) -> void:
 	# Try to grab the Sprite2D texture from the packed scene without instantiating fully
 	if scene_path == SPECIAL_OFFER_CRIT: return
+	if scene_path == SPECIAL_OFFER_HEAL: return
 	if not ResourceLoader.exists(scene_path):
 		return
 	var packed := load(scene_path) as PackedScene
@@ -215,6 +226,8 @@ func _load_duck_texture(tex: TextureRect, scene_path: String) -> void:
 func _duck_display_name(scene_path: String) -> String:
 	if scene_path == SPECIAL_OFFER_CRIT:
 		return "Crit Rate +5%"
+	if scene_path == SPECIAL_OFFER_HEAL:
+		return "Heal All Ducks"
 	var file : String = scene_path.get_file().get_basename()
 	return file.replace("_", " ").capitalize()
 
@@ -228,7 +241,7 @@ func _on_state_changed(s: GameState.State) -> void:
 func _open_reward() -> void:
 	var offers: Array[String] = []
 	if GameState.endless_mode and WaveManager.wave_index %3 ==0:
-		offers = [SPECIAL_OFFER_MATTHEW,SPECIAL_OFFER_CRIT,CARD_SCENES[randi()%CARD_SCENES.size()]]
+		offers = [SPECIAL_OFFER_MATTHEW,SPECIAL_OFFER_CRIT,SPECIAL_OFFER_HEAL]
 	else:
 		var pool := CARD_SCENES.duplicate()
 		pool.shuffle()

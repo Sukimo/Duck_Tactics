@@ -67,6 +67,24 @@ func _on_land()->void:
 				print("[Projectile] hit %s for %d (no take_damage)" % [_target_duck.name, damage])
 		else:
 			print("[Projectile] missed — duck moved %.0fpx away" % duck_dist)
-	
+			_spawn_miss_label(_land_pos)
 	# TODO: spawn a landing dust/impact particle here
 	queue_free()
+
+func _spawn_miss_label(pos: Vector2) -> void:
+	var lbl := Label.new()
+	lbl.text = "MISS"
+	lbl.add_theme_font_size_override("font_size", 14)
+	lbl.add_theme_color_override("font_color", Color(1.0, 0.9, 0.2))   # yellow
+	lbl.add_theme_color_override("font_outline_color", Color(0, 0, 0))
+	lbl.add_theme_constant_override("outline_size", 3)
+	lbl.z_index = 20
+	lbl.global_position = pos - Vector2(16, 16)  # rough center offset
+	get_tree().current_scene.add_child(lbl)
+ 
+	# Float up then fade out over 0.8s
+	var tween := lbl.create_tween()
+	tween.set_parallel(true)
+	tween.tween_property(lbl, "position:y", lbl.position.y - 40.0, 0.8)
+	tween.tween_property(lbl, "modulate:a", 0.0, 0.8)
+	tween.tween_callback(lbl.queue_free).set_delay(0.8)

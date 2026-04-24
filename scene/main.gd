@@ -27,17 +27,17 @@ func _ready() -> void:
 func _on_state_changed(s: GameState.State)->void:
 	match s:
 		GameState.State.REST:
-			hud_label.text = "Rest — prepare your ducks!"
+			pass  #hud_label.text = "Rest — prepare your ducks!"
 		GameState.State.PREP:
-			hud_label.text = "Place your ducks! (15s)"
+			pass   #hud_label.text = "Place your ducks! (15s)"
 		GameState.State.BATTLE:
 			pass   # wave_started signal handles label
 		GameState.State.REWARD:
-			hud_label.text = "Wave cleared! Reward incoming..."
+			pass   #hud_label.text = "Wave cleared! Reward incoming..."
 		GameState.State.WIN:
-			hud_label.text = "YOU WIN — all waves cleared!"
+			pass   #hud_label.text = "YOU WIN — all waves cleared!"
 		GameState.State.GAME_OVER:
-			hud_label.text = "GAME OVER"
+			pass   #hud_label.text = "GAME OVER"
 
 func _on_wave_started(n: int) -> void:
 	hud_label.text = "Wave %d" % n

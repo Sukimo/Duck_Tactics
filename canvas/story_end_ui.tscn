@@ -12,9 +12,12 @@ grow_vertical = 2
 script = ExtResource("1_30not")
 
 [node name="Overlay" type="ColorRect" parent="." unique_id=297756602]
+custom_minimum_size = Vector2(48, 48)
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 333.0
+offset_top = 173.0
+offset_right = 381.0
+offset_bottom = 221.0
 mouse_filter = 2
 color = Color(0, 0, 0, 0.7058824)
 
