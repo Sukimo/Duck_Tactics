@@ -7,12 +7,23 @@ const CRIT_LABEL_SCENE := preload( "res://effects/crit_label.tscn")
 @export var attack_damage: int = 10
 @export var attack_speed: float = 1.0  # attacks/sec
 @export var target_group: Array[String] = []  # "enemies" or "ducks"
+@export var attack_sfx: AudioStream = null
 
 var _cooldown: float = 0.0
 var _owner_node: Node2D = null
+var _sfx_player: AudioStreamPlayer = null
 
 func _ready() -> void:
 	_owner_node = get_parent() as Node2D
+	if attack_sfx:
+		_sfx_player = AudioStreamPlayer.new()
+		_sfx_player.stream = attack_sfx
+		_sfx_player.volume_db = 0.0
+		add_child(_sfx_player)
+
+func _play_attack_sfx() -> void:
+	if _sfx_player:
+		_sfx_player.play()
 
 func _process(delta: float) -> void:
 	_cooldown -= delta

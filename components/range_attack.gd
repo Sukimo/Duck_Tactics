@@ -37,6 +37,8 @@ func do_attack(target: Node2D) -> void:
 		
 	if proj.has_method("init"):
 		proj.call("init", target, start, predicted)
+		
+	_play_attack_sfx() 
 
 # Override in subclass (MatthewRangeAttack) to return matthew_crit_mult
 func _get_crit_mult() -> float:

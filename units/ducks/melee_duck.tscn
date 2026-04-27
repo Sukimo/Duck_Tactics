@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://b6jc45f1snk7v" path="res://sprites/duck_t.png" id="3_liy68"]
 [ext_resource type="Script" uid="uid://dufoubqahcdi" path="res://components/melee_attack.gd" id="3_vt4yn"]
 [ext_resource type="PackedScene" uid="uid://b73q4bv6hdhkt" path="res://components/health_bar.tscn" id="4_g4onk"]
+[ext_resource type="AudioStream" uid="uid://b3p613t0meov8" path="res://music/error_001.ogg" id="6_g47yp"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_txoiq"]
 size = Vector2(32, 32)
@@ -29,5 +30,8 @@ script = ExtResource("3_vt4yn")
 flash_duration = 1.0
 attack_damage = 25
 target_group = Array[String](["enemies", "structures"])
+attack_sfx = ExtResource("6_g47yp")
 
 [node name="HealthBar" parent="." unique_id=968690896 instance=ExtResource("4_g4onk")]
+
+[node name="AttackSFX" type="AudioStreamPlayer" parent="." unique_id=1525621053]

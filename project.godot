@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Duck_Tactics"
-run/main_scene="uid://4y65ctapxa7c"
+run/main_scene="uid://doxjk6s3xb2my"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="res://icon.svg"
 

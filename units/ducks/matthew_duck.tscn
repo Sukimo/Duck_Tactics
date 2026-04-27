@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://5rwfmlf77lu1" path="res://effects/shadow.tscn" id="2_ll15q"]
 [ext_resource type="Script" uid="uid://jdulj8s14g5x" path="res://components/matthew_range_attack.gd" id="3_jmehu"]
 [ext_resource type="PackedScene" uid="uid://b73q4bv6hdhkt" path="res://components/health_bar.tscn" id="4_matt"]
+[ext_resource type="AudioStream" uid="uid://b3p613t0meov8" path="res://music/error_001.ogg" id="5_00l4w"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_matt"]
 size = Vector2(32, 32)
@@ -27,5 +28,8 @@ shape = SubResource("RectangleShape2D_matt")
 [node name="AttackComponent" type="Node" parent="." unique_id=999000005]
 script = ExtResource("3_jmehu")
 target_group = Array[String](["enemies"])
+attack_sfx = ExtResource("5_00l4w")
 
 [node name="HealthBar" parent="." unique_id=999000006 instance=ExtResource("4_matt")]
+
+[node name="AttackSFX" type="AudioStreamPlayer" parent="." unique_id=914790571]

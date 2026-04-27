@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://vnynxenll2al" path="res://sprites/duck_range_t.png" id="2_wadj7"]
 [ext_resource type="Script" uid="uid://c7w68xdn0asqh" path="res://components/range_attack.gd" id="3_tamc0"]
 [ext_resource type="PackedScene" uid="uid://b73q4bv6hdhkt" path="res://components/health_bar.tscn" id="4_7kq42"]
+[ext_resource type="AudioStream" uid="uid://b3p613t0meov8" path="res://music/error_001.ogg" id="5_tamc0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_txoiq"]
 size = Vector2(32, 32)
@@ -33,5 +34,8 @@ attack_range = 200.0
 attack_damage = 25
 attack_speed = 0.9
 target_group = Array[String](["enemies", "structures"])
+attack_sfx = ExtResource("5_tamc0")
+
+[node name="AttackSFX" type="AudioStreamPlayer" parent="." unique_id=995946672]
 
 [node name="HealthBar" parent="." unique_id=968690896 instance=ExtResource("4_7kq42")]

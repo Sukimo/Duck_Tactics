@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://5rwfmlf77lu1" path="res://effects/shadow.tscn" id="2_f77gm"]
 [ext_resource type="Script" uid="uid://c7w68xdn0asqh" path="res://components/range_attack.gd" id="3_apcc8"]
 [ext_resource type="PackedScene" uid="uid://b73q4bv6hdhkt" path="res://components/health_bar.tscn" id="4_y85dp"]
+[ext_resource type="AudioStream" uid="uid://b3p613t0meov8" path="res://music/error_001.ogg" id="5_apcc8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_txoiq"]
 size = Vector2(32, 32)
@@ -32,5 +33,8 @@ arc_height = 0.0
 attack_range = 200.0
 attack_damage = 55
 target_group = Array[String](["enemies", "structures"])
+attack_sfx = ExtResource("5_apcc8")
+
+[node name="AttackSFX" type="AudioStreamPlayer" parent="." unique_id=525429559]
 
 [node name="HealthBar" parent="." unique_id=968690896 instance=ExtResource("4_y85dp")]
