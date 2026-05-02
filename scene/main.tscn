@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://ca5jchkl0qm0l" path="res://canvas/game_over_ui.tscn" id="6_4j5ol"]
 [ext_resource type="PackedScene" uid="uid://d0pcprq85rcxs" path="res://canvas/story_end_ui.tscn" id="7_p1hux"]
 [ext_resource type="AudioStream" uid="uid://854lqhflon25" path="res://music/Fluffing%20a%20Duck.mp3" id="8_b5f6u"]
+[ext_resource type="PackedScene" uid="uid://b8armkemchif" path="res://canvas/options_ui.tscn" id="8_tqoya"]
 [ext_resource type="AudioStream" uid="uid://bax7t0suhmp6j" path="res://music/Wacky Waiting.ogg" id="9_tqoya"]
 
 [node name="Node2D" type="Node2D" unique_id=286947507]
@@ -37,6 +38,7 @@ offset_bottom = 40.0
 text = "How is working..."
 
 [node name="PrepUI" type="Control" parent="CanvasLayer" unique_id=1051206559]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -56,13 +58,19 @@ grow_horizontal = 2
 grow_vertical = 0
 
 [node name="RewardUI" parent="CanvasLayer" unique_id=100200300 instance=ExtResource("5_0ha60")]
+visible = false
 
 [node name="GameOverUI" parent="CanvasLayer" unique_id=471014817 instance=ExtResource("6_4j5ol")]
 
 [node name="StoryEndUI" parent="CanvasLayer" unique_id=131595864 instance=ExtResource("7_p1hux")]
 
+[node name="Control" parent="CanvasLayer" unique_id=1052159200 instance=ExtResource("8_tqoya")]
+visible = false
+
 [node name="MusicRest" type="AudioStreamPlayer" parent="." unique_id=199179161]
 stream = ExtResource("8_b5f6u")
+bus = &"Music"
 
 [node name="MusicBattle" type="AudioStreamPlayer" parent="." unique_id=217070386]
 stream = ExtResource("9_tqoya")
+bus = &"Music"
