@@ -172,5 +172,4 @@ func _update_hud() -> void:
 	var wave_num : int = WaveManager.wave_index + 1
 	var duck_count : int = DuckRoster.count_total()
 	# Money: hook up GameState.money when you add an economy system
-	var money : int = 0
 	hud_label.text = "Wave: %d   Ducks: %d   ❤: %d" % [wave_num, duck_count, GameState.lives]

@@ -53,10 +53,11 @@ func mark_dead(duck: BaseDuck) -> void:
 ## After battle: send all surviving deployed ducks back to resting
 func recall_all() -> void:
 	_purge_invalid()
-	for duck in get_deployed():
-		if duck.has_method("rest_state"):
-			duck.reset_state()
-		set_status(duck, Status.RESTING)
+	for duck in _ducks:
+		if not is_instance_valid(duck):continue
+		duck.reset_state()
+		if duck.roster_status == Status.DEPLOYED:
+			set_status(duck, Status.RESTING)
 	emit_signal("roster_changed")
 
 ## Clear dead ducks from roster and free them

@@ -17,11 +17,12 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-SignalBus="*uid://2xoctt7gd0af"
-GameState="*uid://dnkl72qm3p414"
-DuckRoster="*uid://dy5i5h08s75gd"
-MergeManager="*uid://c3h0ttb4su54s"
-WaveManager="*uid://si0jjtwg7hgo"
+SignalBus="*uid://bk1577n08hiew"
+GameState="*uid://b6cleax8so6sv"
+DuckRoster="*uid://dgoqpln1xfmj0"
+MergeManager="*uid://kywi73l7m1t6"
+WaveManager="*uid://bicclykrll774"
+InputManager="*uid://ngs37gv0xhnh"
 
 [display]
 

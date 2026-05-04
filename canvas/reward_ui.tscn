@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://br4vn0r83colk"]
 
-[ext_resource type="Script" uid="uid://8a4nkbol1c07" path="res://canvas/reward_ui.gd" id="1_rewui"]
+[ext_resource type="Script" uid="uid://3hi8tj6k236s" path="res://canvas/reward_ui.gd" id="1_rewui"]
 [ext_resource type="Texture2D" uid="uid://gc3xp72lpp6w" path="res://sprites/bullet_sour.png" id="2_5tivk"]
 [ext_resource type="Texture2D" uid="uid://6k35vgpfwacd" path="res://sprites/bullet_blue.png" id="3_s6eda"]
 

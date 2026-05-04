@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://doxjk6s3xb2my"]
 
-[ext_resource type="Script" uid="uid://6d18xl3y0q8j" path="res://scene/main.gd" id="1_itxqv"]
+[ext_resource type="Script" uid="uid://bgj5phks47vgi" path="res://scene/main.gd" id="1_itxqv"]
 [ext_resource type="PackedScene" uid="uid://4y65ctapxa7c" path="res://scene/arena_2d.tscn" id="2_v0l8b"]
 [ext_resource type="PackedScene" uid="uid://do7aqhq1pmmeh" path="res://scene/rest_zone.tscn" id="3_wp4xf"]
-[ext_resource type="Script" uid="uid://delclna7dru0q" path="res://scene/prepare_ui.gd" id="4_brvut"]
+[ext_resource type="Script" uid="uid://dgqx1tdumxun7" path="res://canvas/prepare_ui.gd" id="4_brvut"]
 [ext_resource type="PackedScene" uid="uid://br4vn0r83colk" path="res://canvas/reward_ui.tscn" id="5_0ha60"]
 [ext_resource type="PackedScene" uid="uid://ca5jchkl0qm0l" path="res://canvas/game_over_ui.tscn" id="6_4j5ol"]
 [ext_resource type="PackedScene" uid="uid://d0pcprq85rcxs" path="res://canvas/story_end_ui.tscn" id="7_p1hux"]
@@ -28,6 +28,7 @@ position = Vector2(-800, 0)
 [node name="HUD" type="Control" parent="CanvasLayer" unique_id=1529774423]
 layout_mode = 3
 anchors_preset = 0
+mouse_filter = 2
 
 [node name="Label" type="Label" parent="CanvasLayer/HUD" unique_id=93715231]
 layout_mode = 0
@@ -45,6 +46,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("4_brvut")
 metadata/_edit_use_anchors_ = true
 

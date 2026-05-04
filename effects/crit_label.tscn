@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cfdanwbtxne72"]
 
-[ext_resource type="Script" uid="uid://c83ffc1mmv47n" path="res://effects/crit_label.gd" id="1_ahvwn"]
+[ext_resource type="Script" uid="uid://ctbksqhq4rvyr" path="res://effects/crit_label.gd" id="1_ahvwn"]
 [ext_resource type="AudioStream" uid="uid://dxdatfm7g6ie2" path="res://music/laserRetro_004.ogg" id="2_onx6p"]
 
 [node name="CritLabel" type="Node2D" unique_id=888000001]

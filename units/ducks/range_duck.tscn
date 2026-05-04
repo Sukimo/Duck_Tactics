@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://dg6buts2tf6ws"]
 
-[ext_resource type="Script" uid="uid://bqosdplvx2qo5" path="res://units/range_duck.gd" id="1_8fxrk"]
+[ext_resource type="Script" uid="uid://ykjpl80nekf7" path="res://units/range_duck.gd" id="1_8fxrk"]
 [ext_resource type="PackedScene" uid="uid://5rwfmlf77lu1" path="res://effects/shadow.tscn" id="2_3ow40"]
 [ext_resource type="Texture2D" uid="uid://vnynxenll2al" path="res://sprites/duck_range_t.png" id="3_27a8k"]
-[ext_resource type="Script" uid="uid://c7w68xdn0asqh" path="res://components/range_attack.gd" id="3_xd7ve"]
+[ext_resource type="Script" uid="uid://d0mfwgvhnty35" path="res://components/range_attack.gd" id="3_xd7ve"]
 [ext_resource type="PackedScene" uid="uid://b73q4bv6hdhkt" path="res://components/health_bar.tscn" id="4_kolxo"]
 [ext_resource type="AudioStream" uid="uid://b3p613t0meov8" path="res://music/error_001.ogg" id="5_27a8k"]
 

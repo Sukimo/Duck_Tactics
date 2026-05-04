@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://b8nr1vd4mv203"]
 
-[ext_resource type="Script" uid="uid://cplbwj8agtfkr" path="res://enemies/mob.gd" id="1_mob"]
+[ext_resource type="Script" uid="uid://cfejm67w74ikx" path="res://enemies/mob.gd" id="1_mob"]
 [ext_resource type="Texture2D" uid="uid://6k35vgpfwacd" path="res://sprites/bullet_blue.png" id="2_6juje"]
 [ext_resource type="PackedScene" uid="uid://5rwfmlf77lu1" path="res://effects/shadow.tscn" id="2_isfwi"]
-[ext_resource type="Script" uid="uid://c7w68xdn0asqh" path="res://components/range_attack.gd" id="2_mob"]
+[ext_resource type="Script" uid="uid://d0mfwgvhnty35" path="res://components/range_attack.gd" id="2_mob"]
 [ext_resource type="PackedScene" uid="uid://b73q4bv6hdhkt" path="res://components/health_bar.tscn" id="3_mob"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mob"]

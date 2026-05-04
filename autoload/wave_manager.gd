@@ -80,6 +80,12 @@ func begin_battle() -> void:
 	var prep_ui = get_tree().current_scene.get_node_or_null("CanvasLayer/PrepUI")
 	if prep_ui:
 		prep_ui.place_remaining()
+		
+	#reset duck
+	for duck in DuckRoster.get_all():
+		if is_instance_valid(duck):
+			duck.reset_state()
+	
 	GameState.change(GameState.State.BATTLE)
 	emit_signal("wave_started", wave_index + 1)
 	_build_spawn_queue()

@@ -59,62 +59,47 @@ func _draw_level_label() -> void:
 	draw_string(font, pos, lv_text,
 		HORIZONTAL_ALIGNMENT_LEFT, -1, LV_FONT_SIZE, col)
 		
-# input
-func _input(event: InputEvent) -> void:
-	#drag pick-up
-	if (event is InputEventMouseButton 
-			and event.button_index == MOUSE_BUTTON_LEFT): 
-		var world := get_global_mouse_position()
+# input handlers
+func handle_press(world: Vector2)->void:
+	_mouse_held = true
+	_hold_timer = 0.0
+	_drag_origin = global_position
+	
+func handle_release(world: Vector2)->void:
+	if _is_dragging:
+		_is_dragging = false
+		z_index = 0
+		_has_target = false
+		_try_merge_at(world)
+	elif _mouse_held:
+		_mouse_held = false
+		_set_selected(not _selected) # tap = toggle select
 		
-		#press
-		if event.pressed:
-			if _is_click_on_self(world):
-				#start hold timer clikc or drag in _process
-				_mouse_held=true
-				_hold_timer=0.0
-				get_viewport().set_input_as_handled()
-			elif _selected:
-				#clicked world while selected move command
-				_move_to(world)
-				_set_selected(false)
-				get_viewport().set_input_as_handled()
-			return
-		#release
-		if not event.pressed:
-			if _is_dragging:
-				#end drag > attempt merge
-				_is_dragging=false
-				z_index=0
-				_has_target =false
-				_try_merge_at(world)
-				get_viewport().set_input_as_handled()
-			elif _mouse_held:
-				#release before hold threshold > treat as plain click >select
-				_mouse_held =false
-				_set_selected(true)
-				get_viewport().set_input_as_handled()
-			return
-	#drag follow
-	if event is InputEventMouseMotion and _is_dragging:
-		global_position =get_global_mouse_position()
-		get_viewport().set_input_as_handled()
-		
+func handle_motion(world: Vector2)->void:
+	if _is_dragging:
+		global_position = world
+	
+func move_to_cmd(pos: Vector2)->void:
+	_move_to(pos)
+	# intentionally keep _selected = true 
+	
 #process
 func _process(delta: float) -> void:
 	if _mouse_held and not _is_dragging:
 		_hold_timer += delta
 		if _hold_timer >= HOLD_THRESHOLD:
 			#crossed threshold > become drag
-			_mouse_held=false
-			_is_dragging=true
-			_drag_origin = global_position
-			_has_target =false #stop while dragging
+			_mouse_held= false
+			_is_dragging= true
+			#_drag_origin = global_position
+			_has_target = false #stop while dragging
 			velocity = Vector2.ZERO
 			z_index = 10 #render on top
-			
+	
 #physics process
 func _physics_process(delta: float) -> void:
-	attack_component.try_attack()
+	if is_instance_valid(attack_component):
+		attack_component.try_attack()
 	_do_movement()
 
 func can_move()-> bool: return true
@@ -166,17 +151,18 @@ func reset_state()->void:
  
 	# Movement
 	_has_target = false
-	_target_pos = Vector2.ZERO
+	_target_pos = global_position
 	velocity    = Vector2.ZERO
  
 	# NavAgent — cancel any queued path
 	if is_instance_valid(nav_agent):
 		nav_agent.target_position = global_position  # point at self = no movement
- 
+		nav_agent.velocity = Vector2.ZERO
+	
 	# Attack cooldown reset so it doesn't fire instantly next deployment
 	if is_instance_valid(attack_component):
 		attack_component._cooldown = 0.0
-
+	
 #merge drop
 func _try_merge_at(drop_world: Vector2)->void:
 	# Find any duck under the drop point (except self)
@@ -201,7 +187,7 @@ func _is_click_on_self(world_pos:Vector2) -> bool:
 func _set_selected(value:bool)->void:
 	_selected=value
 	if sprite:
-		sprite.modulate = selected_color if _selected else normal_color
+		sprite.modulate = selected_color if value else normal_color
 
 func _move_to(pos:Vector2)->void:
 	_target_pos =pos
@@ -209,10 +195,7 @@ func _move_to(pos:Vector2)->void:
 	nav_agent.target_position =pos
 
 #public API
-func get_selected()->bool:
-	return _selected
-func duck_type()-> String:
-	return "Baseduck"
+func get_selected()->bool: return _selected
+func duck_type()-> String: return "Baseduck"
 ## Called externally (merge system, game manager) to reposition the duck.
-func force_move(pos:Vector2)->void:
-	_move_to(pos)
+func force_move(pos:Vector2)->void: _move_to(pos)

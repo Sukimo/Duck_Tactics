@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://ca5jchkl0qm0l"]
 
-[ext_resource type="Script" uid="uid://6t4slf1m0i0v" path="res://canvas/game_over_ui.gd" id="1_m6qic"]
+[ext_resource type="Script" uid="uid://cwurqv0p17ypb" path="res://canvas/game_over_ui.gd" id="1_m6qic"]
 
 [node name="GameOverUI" type="Control" unique_id=471014817]
 visible = false
