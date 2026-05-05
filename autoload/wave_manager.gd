@@ -96,8 +96,16 @@ func on_arrived_at_rest() -> void:
 
 func _begin_prep() -> void:
 	GameState.change(GameState.State.PREP)
-	_collect_active_edges()
-	emit_signal("spawn_edges_ready", _active_edges.duplicate())
+	
+	#Collect edges from upcoming wave data and emit BEFORE battle
+	_active_edges.clear()
+	var data : Dictionary = _get_wave_data()
+	for entry in data["enemies"]:
+		var edge : String = entry.get("edge","left")
+		if not _active_edges.has(edge):
+			_active_edges.append(edge)
+	emit_signal("spawn_edges_ready",_active_edges)
+		
 	var prep_ui  = get_tree().current_scene.get_node_or_null("CanvasLayer/PrepUI")
 	var rest_zone = get_tree().current_scene.get_node_or_null("RestZone")
 	if prep_ui:
@@ -141,7 +149,7 @@ func _build_spawn_queue() -> void:
 				"delay": entry["interval"],
 				"edge":  edge
 			})
-
+		
 func _scale_endless() -> Dictionary:
 	var loop        := _endless_loop
 	_endless_loop   += 1

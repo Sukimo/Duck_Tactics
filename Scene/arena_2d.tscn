@@ -16,6 +16,8 @@ offset_bottom = 450.0
 mouse_filter = 2
 color = Color(0.65882355, 0.9019608, 0.11372549, 1)
 
+[node name="ArrowLayer" type="Node2D" parent="." unique_id=601088364]
+
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="." unique_id=1392470367]
 navigation_polygon = SubResource("NavigationPolygon_4ecip")
 
