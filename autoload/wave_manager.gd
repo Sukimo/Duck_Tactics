@@ -3,7 +3,7 @@ extends Node
 # Responsibility: phase orchestration only.
 # Data  → WaveData
 # Spawn → SpawnManager
-
+# HEY SEE THAT FAKING CODE YET!?
 signal wave_started(wave_number: int)
 signal wave_cleared
 signal all_waves_cleared
