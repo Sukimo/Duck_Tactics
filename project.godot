@@ -21,6 +21,7 @@ SignalBus="*uid://bk1577n08hiew"
 GameState="*uid://b6cleax8so6sv"
 DuckRoster="*uid://dgoqpln1xfmj0"
 MergeManager="*uid://kywi73l7m1t6"
+SpawnManager="*uid://cjab80higapau"
 WaveManager="*uid://bicclykrll774"
 InputManager="*uid://ngs37gv0xhnh"
 

@@ -4,8 +4,8 @@ extends Node
 var _dragging_duck: BaseDuck = null   # track which duck is being dragged
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and event.pressed:
-		print("Click!! mouse pos: ", event.position)
+	#if event is InputEventMouseButton and event.pressed:
+		#print("Click!! mouse pos: ", event.position)
 	
 	if not (event is InputEventMouseButton or event is InputEventMouseMotion):
 		return
