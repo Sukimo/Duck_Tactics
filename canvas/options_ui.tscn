@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dppoec53eiaq3" path="res://canvas/options_ui.gd" id="1_yy1a4"]
 
-[node name="Control" type="Control" unique_id=1052159200]
+[node name="OptionUI" type="Control" unique_id=1052159200]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,128 +11,170 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_yy1a4")
 
-[node name="ColorRect" type="ColorRect" parent="." unique_id=259658849]
+[node name="Overlay" type="ColorRect" parent="." unique_id=259658849]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0, 0, 0, 0.39215687)
+color = Color(0, 0, 0, 0.55)
 
-[node name="Panel" type="Panel" parent="." unique_id=1766428236]
-visible = false
-layout_mode = 0
-offset_right = 460.0
-offset_bottom = 260.0
-
-[node name="MarginContainer" type="MarginContainer" parent="." unique_id=72269798]
+[node name="Window" type="PanelContainer" parent="Overlay" unique_id=300000001]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -180.0
+offset_right = 200.0
+offset_bottom = 180.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 25
-theme_override_constants/margin_top = 20
-theme_override_constants/margin_right = 25
-metadata/_edit_use_anchors_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=752780292]
+[node name="VBox" type="VBoxContainer" parent="Overlay/Window" unique_id=300000002]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="TitleBar" type="HBoxContainer" parent="Overlay/Window/VBox" unique_id=300000003]
 layout_mode = 2
 
-[node name="Title" type="PanelContainer" parent="MarginContainer/VBoxContainer" unique_id=1241085592]
+[node name="Title" type="Label" parent="Overlay/Window/VBox/TitleBar" unique_id=300000004]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 15
+text = "⚙  Options"
+
+[node name="CloseButton" type="Button" parent="Overlay/Window/VBox/TitleBar" unique_id=300000005]
+layout_mode = 2
+text = "✕"
+
+[node name="HSep" type="HSeparator" parent="Overlay/Window/VBox" unique_id=300000006]
 layout_mode = 2
 
-[node name="Options" type="Label" parent="MarginContainer/VBoxContainer/Title" unique_id=536633159]
-layout_mode = 2
-text = "Option"
-horizontal_alignment = 1
-
-[node name="Sound options" type="PanelContainer" parent="MarginContainer/VBoxContainer" unique_id=910580443]
+[node name="SoundSection" type="VBoxContainer" parent="Overlay/Window/VBox" unique_id=300000007]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/Sound options" unique_id=1936719713]
+[node name="SoundLabel" type="Label" parent="Overlay/Window/VBox/SoundSection" unique_id=300000008]
 layout_mode = 2
-
-[node name="Sound" type="Label" parent="MarginContainer/VBoxContainer/Sound options/VBoxContainer" unique_id=399242627]
-layout_mode = 2
+theme_override_font_sizes/font_size = 12
 text = "Sound"
 
-[node name="Contents" type="MarginContainer" parent="MarginContainer/VBoxContainer/Sound options/VBoxContainer" unique_id=247213481]
+[node name="Contents" type="MarginContainer" parent="Overlay/Window/VBox/SoundSection" unique_id=247213481]
 layout_mode = 2
-theme_override_constants/margin_left = 25
-theme_override_constants/margin_right = 100
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_right = 12
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/Sound options/VBoxContainer/Contents" unique_id=1807954362]
+[node name="VBoxContainer" type="VBoxContainer" parent="Overlay/Window/VBox/SoundSection/Contents" unique_id=1807954362]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="HBmusic" type="HBoxContainer" parent="Overlay/Window/VBox/SoundSection/Contents/VBoxContainer" unique_id=561247973]
 layout_mode = 2
 
-[node name="HBmusic" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Sound options/VBoxContainer/Contents/VBoxContainer" unique_id=561247973]
+[node name="Label2" type="Label" parent="Overlay/Window/VBox/SoundSection/Contents/VBoxContainer/HBmusic" unique_id=359809590]
+custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
+text = "Music"
 
-[node name="Label2" type="Label" parent="MarginContainer/VBoxContainer/Sound options/VBoxContainer/Contents/VBoxContainer/HBmusic" unique_id=359809590]
-custom_minimum_size = Vector2(150, 0)
-layout_mode = 2
-text = "Music sound"
-
-[node name="HSlider" type="HSlider" parent="MarginContainer/VBoxContainer/Sound options/VBoxContainer/Contents/VBoxContainer/HBmusic" unique_id=2009418384]
+[node name="HSlider" type="HSlider" parent="Overlay/Window/VBox/SoundSection/Contents/VBoxContainer/HBmusic" unique_id=2009418384]
 layout_mode = 2
 size_flags_horizontal = 3
+value = 100.0
 
-[node name="ValueLabel" type="Label" parent="MarginContainer/VBoxContainer/Sound options/VBoxContainer/Contents/VBoxContainer/HBmusic" unique_id=360157065]
-custom_minimum_size = Vector2(40, 0)
+[node name="ValueLabel" type="Label" parent="Overlay/Window/VBox/SoundSection/Contents/VBoxContainer/HBmusic" unique_id=360157065]
+custom_minimum_size = Vector2(32, 0)
 layout_mode = 2
 text = "100"
-horizontal_alignment = 1
+horizontal_alignment = 2
 
-[node name="HBsfx" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Sound options/VBoxContainer/Contents/VBoxContainer" unique_id=2144246564]
+[node name="HBsfx" type="HBoxContainer" parent="Overlay/Window/VBox/SoundSection/Contents/VBoxContainer" unique_id=2144246564]
 layout_mode = 2
 
-[node name="Label3" type="Label" parent="MarginContainer/VBoxContainer/Sound options/VBoxContainer/Contents/VBoxContainer/HBsfx" unique_id=681186771]
-custom_minimum_size = Vector2(150, 0)
+[node name="Label3" type="Label" parent="Overlay/Window/VBox/SoundSection/Contents/VBoxContainer/HBsfx" unique_id=681186771]
+custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
-text = "SFX sound"
+text = "SFX"
 
-[node name="HSlider" type="HSlider" parent="MarginContainer/VBoxContainer/Sound options/VBoxContainer/Contents/VBoxContainer/HBsfx" unique_id=98742046]
+[node name="HSlider" type="HSlider" parent="Overlay/Window/VBox/SoundSection/Contents/VBoxContainer/HBsfx" unique_id=98742046]
 layout_mode = 2
 size_flags_horizontal = 3
+value = 100.0
 
-[node name="ValueLabel" type="Label" parent="MarginContainer/VBoxContainer/Sound options/VBoxContainer/Contents/VBoxContainer/HBsfx" unique_id=1866149126]
-custom_minimum_size = Vector2(40, 0)
+[node name="ValueLabel" type="Label" parent="Overlay/Window/VBox/SoundSection/Contents/VBoxContainer/HBsfx" unique_id=1866149126]
+custom_minimum_size = Vector2(32, 0)
 layout_mode = 2
 text = "100"
-horizontal_alignment = 1
+horizontal_alignment = 2
 
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/Sound options/VBoxContainer" unique_id=640239378]
+[node name="HBui" type="HBoxContainer" parent="Overlay/Window/VBox/SoundSection/Contents/VBoxContainer" unique_id=400000001]
 layout_mode = 2
 
-[node name="Credits" type="PanelContainer" parent="MarginContainer/VBoxContainer" unique_id=685725212]
+[node name="Label" type="Label" parent="Overlay/Window/VBox/SoundSection/Contents/VBoxContainer/HBui" unique_id=400000002]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.75, 0.75, 0.75, 1)
+theme_override_font_sizes/font_size = 11
+text = "  UI"
+
+[node name="HSlider" type="HSlider" parent="Overlay/Window/VBox/SoundSection/Contents/VBoxContainer/HBui" unique_id=400000003]
+layout_mode = 2
+size_flags_horizontal = 3
+value = 100.0
+
+[node name="ValueLabel" type="Label" parent="Overlay/Window/VBox/SoundSection/Contents/VBoxContainer/HBui" unique_id=400000004]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+text = "100"
+horizontal_alignment = 2
+
+[node name="HBworld" type="HBoxContainer" parent="Overlay/Window/VBox/SoundSection/Contents/VBoxContainer" unique_id=400000005]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/Credits" unique_id=23909087]
+[node name="Label" type="Label" parent="Overlay/Window/VBox/SoundSection/Contents/VBoxContainer/HBworld" unique_id=400000006]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.75, 0.75, 0.75, 1)
+theme_override_font_sizes/font_size = 11
+text = "  World"
+
+[node name="HSlider" type="HSlider" parent="Overlay/Window/VBox/SoundSection/Contents/VBoxContainer/HBworld" unique_id=400000007]
+layout_mode = 2
+size_flags_horizontal = 3
+value = 100.0
+
+[node name="ValueLabel" type="Label" parent="Overlay/Window/VBox/SoundSection/Contents/VBoxContainer/HBworld" unique_id=400000008]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+text = "100"
+horizontal_alignment = 2
+
+[node name="HSep2" type="HSeparator" parent="Overlay/Window/VBox" unique_id=300000009]
 layout_mode = 2
 
-[node name="Credits" type="Label" parent="MarginContainer/VBoxContainer/Credits/VBoxContainer" unique_id=1922555544]
+[node name="CreditsSection" type="VBoxContainer" parent="Overlay/Window/VBox" unique_id=300000010]
 layout_mode = 2
+
+[node name="CreditsLabel" type="Label" parent="Overlay/Window/VBox/CreditsSection" unique_id=300000011]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
 text = "Credits"
 
-[node name="Contents" type="MarginContainer" parent="MarginContainer/VBoxContainer/Credits/VBoxContainer" unique_id=292159010]
+[node name="Credit1" type="Label" parent="Overlay/Window/VBox/CreditsSection" unique_id=300000012]
 layout_mode = 2
-theme_override_constants/margin_left = 25
+theme_override_font_sizes/font_size = 10
+text = "Battle Music  \"Wacky Waiting\"  by Kenny Game Assets"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/Credits/VBoxContainer/Contents" unique_id=999571413]
+[node name="Credit2" type="Label" parent="Overlay/Window/VBox/CreditsSection" unique_id=300000013]
 layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "Rest Music  \"Fluffing a Duck\"  by Kevin MacLeod"
 
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/Credits/VBoxContainer/Contents/VBoxContainer" unique_id=2140022223]
-layout_mode = 2
-text = "Battle Music  \" Wacky Waiting \"  & SFX by Kenny Game Assets"
-
-[node name="Label2" type="Label" parent="MarginContainer/VBoxContainer/Credits/VBoxContainer/Contents/VBoxContainer" unique_id=1813809318]
-layout_mode = 2
-text = "Refresh Music \"Fluffing a Duck\" by Kevin MacLeod "
-
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/Credits/VBoxContainer" unique_id=1200265781]
-layout_mode = 2
-
-[connection signal="value_changed" from="MarginContainer/VBoxContainer/Sound options/VBoxContainer/Contents/VBoxContainer/HBmusic/HSlider" to="." method="_on_music_slider_value_changed"]
-[connection signal="value_changed" from="MarginContainer/VBoxContainer/Sound options/VBoxContainer/Contents/VBoxContainer/HBsfx/HSlider" to="." method="_on_sfx_slider_value_changed"]
+[connection signal="gui_input" from="Overlay" to="." method="_on_overlay_gui_input"]
+[connection signal="pressed" from="Overlay/Window/VBox/TitleBar/CloseButton" to="." method="_on_close_pressed"]
+[connection signal="value_changed" from="Overlay/Window/VBox/SoundSection/Contents/VBoxContainer/HBmusic/HSlider" to="." method="_on_music_slider_value_changed"]
+[connection signal="value_changed" from="Overlay/Window/VBox/SoundSection/Contents/VBoxContainer/HBsfx/HSlider" to="." method="_on_sfx_slider_value_changed"]
+[connection signal="value_changed" from="Overlay/Window/VBox/SoundSection/Contents/VBoxContainer/HBui/HSlider" to="." method="_on_ui_slider_value_changed"]
+[connection signal="value_changed" from="Overlay/Window/VBox/SoundSection/Contents/VBoxContainer/HBworld/HSlider" to="." method="_on_world_slider_value_changed"]

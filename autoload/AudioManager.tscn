@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://cjqw1ydoie4o"]
+
+[ext_resource type="Script" uid="uid://cu7uu2xc2ae6g" path="res://autoload/audio_manager.gd" id="1_amgr"]
+
+[node name="AudioManager" type="Node" unique_id=699650230]
+script = ExtResource("1_amgr")
+
+[node name="MusicA" type="AudioStreamPlayer" parent="." unique_id=1016788908]
+bus = &"Music"
+
+[node name="MusicB" type="AudioStreamPlayer" parent="." unique_id=1562993987]
+bus = &"Music"
+
+[node name="Ambience" type="AudioStreamPlayer" parent="." unique_id=675433131]

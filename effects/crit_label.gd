@@ -25,6 +25,7 @@ func init(amount: int, world_pos: Vector2, is_crit: bool) -> void:
 	if is_crit and crit_sound != null:
 		var sfx := AudioStreamPlayer2D.new()
 		sfx.stream        = crit_sound
+		sfx.bus           = &"SFX"
 		sfx.max_distance  = 800.0   # audible across the arena
 		sfx.pitch_scale   = randf_range(0.9, 1.1)  # slight variation so it never feels robotic
 		sfx.autoplay      = false

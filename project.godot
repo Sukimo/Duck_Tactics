@@ -15,10 +15,15 @@ run/main_scene="uid://doxjk6s3xb2my"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[audio]
+
+buses/default_bus_layout="uid://cwo87ulk1bnrn"
+
 [autoload]
 
 SignalBus="*uid://bk1577n08hiew"
 GameState="*uid://b6cleax8so6sv"
+AudioManager="*res://autoload/AudioManager.tscn"
 DuckRoster="*uid://dgoqpln1xfmj0"
 MergeManager="*uid://kywi73l7m1t6"
 SpawnManager="*uid://cjab80higapau"

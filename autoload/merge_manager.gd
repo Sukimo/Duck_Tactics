@@ -53,6 +53,11 @@ func try_merge(a: BaseDuck, b: BaseDuck)-> void:
 	a.queue_free()
 	b.queue_free()
 	print("[Merge] %s lv%d + lv%d → lv%d" % [a.duck_type(), a.duck_level, b.duck_level, next_level])
+	
+	# Audio
+	#AudioManager.play_world("game_merge", 0.08)
+	#AudioManager.play_world("game_level_up", 0.0)
+	
 	SignalBus.emit_signal("duck_merged",merged)
 	
 func _snap_back(_duck:BaseDuck)-> void:

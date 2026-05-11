@@ -3,14 +3,13 @@ extends Node
 # Responsibility: phase orchestration only.
 # Data  → WaveData
 # Spawn → SpawnManager
-# HEY SEE THAT FAKING CODE YET!?
+
 signal wave_started(wave_number: int)
 signal wave_cleared
 signal all_waves_cleared
 signal spawn_edges_ready(edges: Array)
 
 const PREP_TIME   : float = 15.0
-
 # WaveData is a plain script — not an autoload, loaded once here
 const WaveData = preload("res://autoload/wave_data.gd")
 
@@ -79,6 +78,9 @@ func begin_battle() -> void:
 	GameState.change(GameState.State.BATTLE)
 	emit_signal("wave_started", wave_index + 1)
 	
+	# Audio
+	#AudioManager.play_world("game_wave_start")
+	
 	# Hand patterns to SpawnManager and let it run
 	var endless_arg: int = -1
 	if GameState.endless_mode:
@@ -94,6 +96,9 @@ func _begin_reward() -> void:
 func _on_all_enemies_dead()->void:
 	if not GameState.is_state(GameState.State.BATTLE):
 		return
+	
+	# Audio
+	#AudioManager.play_world("game_wave_clear")
 	
 	var rest_zone = get_tree().current_scene.get_node_or_null("RestZone")
 	if rest_zone and rest_zone.has_method("snapshot_deployed"):
@@ -125,6 +130,9 @@ func _on_duck_wipe()->void:
 	SpawnManager.abort()
 	GameState.lives -= 1
 	print("[WaveManager] Duck wipe! Lives left: %d" % GameState.lives)
+	
+	# Audio 
+	#AudioManager.play_world("game_duck_death")
 	
 	DuckRoster.recall_all()
 	DuckRoster.clear_dead()

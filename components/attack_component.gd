@@ -15,16 +15,28 @@ var _sfx_player: AudioStreamPlayer = null
 
 func _ready() -> void:
 	_owner_node = get_parent() as Node2D
+	_setup_sfx()
+
+# Audio setup
+func _setup_sfx()->void:
+	var existing := get_parent().get_node_or_null("AttackSFX") as AudioStreamPlayer
+	if existing:
+		_sfx_player = existing
+	elif attack_sfx:
+		_sfx_player =AudioStreamPlayer.new()
+		get_parent().add_child(_sfx_player)
+	
+	if _sfx_player == null: return
+	
+	_sfx_player.bus = &"SFX"
 	if attack_sfx:
-		_sfx_player = AudioStreamPlayer.new()
 		_sfx_player.stream = attack_sfx
-		_sfx_player.volume_db = 0.0
-		add_child(_sfx_player)
 
 func _play_attack_sfx() -> void:
-	if _sfx_player:
+	if _sfx_player and _sfx_player.stream:
 		_sfx_player.play()
 
+# Core tick
 func _process(delta: float) -> void:
 	_cooldown -= delta
 
