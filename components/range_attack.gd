@@ -18,25 +18,24 @@ func do_attack(target: Node2D) -> void:
 		vel = target.velocity
 	var predicted := t_pos + vel * travel
 
-	# ── Crit roll using GameState globals ────────────────────────────────────
+	# Crit roll using GameState globals 
 	var is_crit: bool = randf() < GameState.global_duck_crit_rate
 	var mult: float = _get_crit_mult()
 	var final_damage: int = int(attack_damage * mult) if is_crit else attack_damage
-	if is_crit:
-		print("[RangeAtk] CRIT! %d dmg (x%.1f)" % [final_damage, mult])
- 
+	
 	var proj = PROJECTILE_SCENE.instantiate()
 	get_tree().current_scene.add_child(proj)
 	
-	if proj.get("damage") != null:
-		proj.damage = attack_damage
-	if proj.get("speed") !=null:
-		proj.speed = projectile_speed
-	if proj.get("arc_height") !=null:
-		proj.arc_height = arc_height
+	if proj.get("damage") != null: proj.damage = attack_damage
+	if proj.get("speed")  != null: proj.speed = projectile_speed
+	if proj.get("arc_height") != null: proj.arc_height = arc_height
 		
 	if proj.has_method("init"):
 		proj.call("init", target, start, predicted)
+	
+	if is_crit:
+		print("[RangeAtk] CRIT! %d dmg (x%.1f)" % [final_damage, mult])
+		_spawn_crit_label(final_damage,t_pos,true)
 		
 	_play_attack_sfx() 
 

@@ -22,10 +22,10 @@ var _flash_timer: float = 0.0
 var _flash_pos: Vector2 = Vector2.ZERO
 var _flash_active: bool = false
 
-func try_attack(target: Node2D = null)->void:
+func try_attack(target: Node2D = null)->bool:
 	if _state != BumpState.IDLE:
-		return
-	super.try_attack(target)
+		return false
+	return super.try_attack(target)
 
 func do_attack(target: Node2D) -> void:
 	_pending_target = target
@@ -40,15 +40,13 @@ func _process(delta: float) -> void:
 	match _state:
 		BumpState.LUNGING:
 			_owner_node.global_position = _owner_node.global_position.move_toward(
-				_bump_target_pos, bump_speed * delta
-			)
+				_bump_target_pos, bump_speed * delta)
 			if _owner_node.global_position.distance_to(_bump_target_pos) < 2.0:
 				_on_contact()
 
 		BumpState.RETURNING:
 			_owner_node.global_position = _owner_node.global_position.move_toward(
-				_origin_pos, return_speed * delta
-			)
+				_origin_pos, return_speed * delta)
 			if _owner_node.global_position.distance_to(_origin_pos) < 2.0:
 				_owner_node.global_position = _origin_pos
 				_state = BumpState.IDLE

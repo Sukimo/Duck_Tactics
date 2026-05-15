@@ -11,4 +11,4 @@ func _on_contact() -> void:
 		_flash_active = true
 		_flash_timer = flash_duration
 	_pending_target = null
- 
+	_play_attack_sfx()
