@@ -23,8 +23,8 @@ func start_game() -> void:
 	_endless_loop = 0
 	_spawn_starter_duck()
 	GameState.change(GameState.State.SLIDE_TO_ARENA)
-	_begin_prep()
-
+	_begin_prep() # you can remove it we start the game at this state
+	
 func _spawn_starter_duck() -> void:
 	for scene in WaveData.STARTER_DUCKS:
 		var duck : Node = (scene as PackedScene).instantiate()

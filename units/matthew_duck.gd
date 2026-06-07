@@ -1,8 +1,13 @@
 extends BaseDuck
 class_name MatthewDuck
 
-# Matthew adds his aura to the global crit rate on spawn, removes it on death
-@export var aura_crit_bonus: float = 0.10   # +10% to GameState.global_duck_crit_rate
+# Matthew's identity now lives entirely in his child AbilityComponent nodes:
+#   - CritAuraAbility  (child node in matthew_duck.tscn)
+#   - GooThrowAbility  (child node in matthew_duck.tscn)
+#
+# This script is intentionally thin — no hardcoded aura math here.
+# To transfer an ability to another duck at runtime:
+#   AbilityManager.transfer_ability(matthew, other_duck, "GooThrowAbility")
 
 const LABEL_COLOR_NAME  := Color(0,0,0,1.0)
 const LABEL_COLOR_LEVEL := Color(0,0,0, 1.0)
@@ -10,16 +15,6 @@ const LABEL_OFFSET_Y    := -38.0
 
 func _ready() -> void:
 	super._ready()
-	GameState.global_duck_crit_rate += aura_crit_bonus
-	print("[Matthew] Aura ON — global crit rate → %.0f%%" \
-		% (GameState.global_duck_crit_rate * 100))
-
-func _exit_tree() -> void:
-	GameState.global_duck_crit_rate = maxf(
-		0.0, GameState.global_duck_crit_rate - aura_crit_bonus
-	)
-	print("[Matthew] Aura OFF — global crit rate → %.0f%%" \
-		% (GameState.global_duck_crit_rate * 100))
 
 func _draw() -> void:
 	super._draw()

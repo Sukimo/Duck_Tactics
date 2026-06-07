@@ -29,6 +29,7 @@ MergeManager="*uid://kywi73l7m1t6"
 SpawnManager="*uid://cjab80higapau"
 WaveManager="*uid://bicclykrll774"
 InputManager="*uid://ngs37gv0xhnh"
+AbilityManager="*uid://bkoulbbyyhjtc"
 
 [display]
 

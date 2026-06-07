@@ -39,7 +39,7 @@ func _tick_ai()->void:
 			_on_attack()
 
 # Target validation 
-func _is_valid_target(target: Node2D) -> bool:
+func _is_valid_target(target: Variant) -> bool:
 	if not is_instance_valid(target):
 		return false
 	# Dead ducks are not freed — check roster status explicitly
@@ -89,13 +89,16 @@ func _do_movement()->void:
 # Targeting
 func _find_nearest_duck() -> Node2D:
 	var best: Node2D = null
-	var best_dist: float = aggro_range
+	var best_dist: float = INF
 	for duck in get_tree().get_nodes_in_group("ducks"):
 		if not is_instance_valid(duck) or not duck is Node2D:
 			continue
-		#skip dead ducks
-		if duck.get("roster_status") !=null:
+		# Skip dead ducks
+		if duck.get("roster_status") != null:
 			if duck.roster_status == DuckRoster.Status.DEAD:
+				continue
+			# Skip resting ducks — they're in RestZone, not in battle
+			if duck.roster_status == DuckRoster.Status.RESTING:
 				continue
 		var d := global_position.distance_to((duck as Node2D).global_position)
 		if d < best_dist:

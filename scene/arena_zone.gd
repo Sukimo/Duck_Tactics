@@ -37,7 +37,13 @@ func _on_arrow_layer_draw()->void:
 	var col := Color(ARROW_COLOR.r, ARROW_COLOR.g, ARROW_COLOR.b, pulse_alpha)
 	for edge in _active_edges:
 		_draw_edge_arrows(edge, col)
- 
+
+func _on_state_changed(s: GameState.State)->void:
+	control.visible = (s == GameState.State.PREP)
+	if s == GameState.State.BATTLE:
+		timer_laber.text = ""
+		_active_edges = []
+	arrow_layer.queue_redraw() 
 
 func _process(delta: float) -> void:
 	if GameState.is_state(GameState.State.PREP):
@@ -46,15 +52,6 @@ func _process(delta: float) -> void:
 		#pulse arrows
 		_pulse_t += delta * ARROW_PULSE_SPEED
 		arrow_layer.queue_redraw()
-	else:
-		if timer_laber.text != "":
-			timer_laber.text = ""
-
-func _on_state_changed(s: GameState.State)->void:
-	control.visible = (s == GameState.State.PREP)
-	if s != GameState.State.PREP:
-		_active_edges = []
-	arrow_layer.queue_redraw() 
 
 # ── Draw spawn-edge warning arrows ───────────────────────────────────────────
 func _draw() -> void:

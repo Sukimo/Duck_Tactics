@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://cnkf55h6g546p"]
+
+[ext_resource type="Script" uid="uid://ipyvg0sambiq" path="res://effects/goo_puddle.gd" id="1_goopu"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_goopu"]
+radius = 56.0
+
+[node name="GooPuddle" type="Area2D" unique_id=700000001]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_goopu")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=700000002]
+shape = SubResource("CircleShape2D_goopu")

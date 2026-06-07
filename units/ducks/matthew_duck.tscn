@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://7ouxrpbv0o8s" path="res://components/matthew_range_attack.gd" id="3_jmehu"]
 [ext_resource type="PackedScene" uid="uid://b73q4bv6hdhkt" path="res://components/health_bar.tscn" id="4_matt"]
 [ext_resource type="AudioStream" uid="uid://b3p613t0meov8" path="res://music/error_001.ogg" id="5_00l4w"]
+[ext_resource type="Script" uid="uid://d03ut5uawr8vl" path="res://abilities/goo_throw_ability.gd" id="7_cf1qn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_matt"]
 size = Vector2(32, 32)
@@ -33,3 +34,6 @@ attack_sfx = ExtResource("5_00l4w")
 [node name="HealthBar" parent="." unique_id=999000006 instance=ExtResource("4_matt")]
 
 [node name="AttackSFX" type="AudioStreamPlayer" parent="." unique_id=914790571]
+
+[node name="GooThrowAbility" type="Node" parent="." unique_id=1462835119]
+script = ExtResource("7_cf1qn")
